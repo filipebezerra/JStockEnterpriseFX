@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jstockenterprisefx.main.MainController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="Cadastro">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#showGroupsView" text="Grupos" />
+                  <MenuItem mnemonicParsing="false" text="Setores" />
+                  <MenuItem mnemonicParsing="false" text="Fornecedores" />
+                  <MenuItem mnemonicParsing="false" text="Itens" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Movimentação">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Estoque" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Relatório">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Catálogo do Estoque" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+</BorderPane>
