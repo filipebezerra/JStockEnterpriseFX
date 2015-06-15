@@ -65,4 +65,16 @@ public class MainController {
 			e.printStackTrace();
 		}
 	}
+
+	@FXML
+	private void showStockView() {
+		try {
+			AnchorPane stockView = (AnchorPane) FXMLLoader.load(getClass()
+					.getResource("../stock/StockView.fxml"));
+			mMainApp.getMainView().setCenter(stockView);
+		} catch (IOException e) {
+			// TODO treat exception
+			e.printStackTrace();
+		}
+	}
 }

@@ -49,8 +49,6 @@ public class Group extends NamedEntity {
 
 	@Override
 	public String toString() {
-		return new StringBuffer(super.toString().replace("}", ""))
-				.append(", type : ").append(groupType.get()).append("}")
-				.toString();
+		return getName();
 	}
 }

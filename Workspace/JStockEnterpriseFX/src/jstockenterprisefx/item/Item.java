@@ -131,11 +131,6 @@ public class Item extends Entity {
 
 	@Override
 	public String toString() {
-		return new StringBuffer(super.toString().replace("}", ""))
-				.append(", description : ").append(description.get())
-				.append(", salePrice : ").append(salePrice.get())
-				.append(", stockQuantity : ").append(stockQuantity.get())
-				.append("}")
-				.toString();
+		return getDescription();
 	}
 }

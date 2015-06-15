@@ -13,7 +13,6 @@ public class DepartamentMockData {
 				"Fernanda Karoline"));
 		departamentData.add(new Department("Diretoria", "Lucivânia Alves"));
 		departamentData.add(new Department("Capacitação", "Ana Flávia"));
-		departamentData.add(new Department("Ana Flávia", "Bruna Alice"));
 		departamentData.add(new Department("Pesquisa e Desenvolvimento",
 				"Nasser Ali"));
 		departamentData.add(new Department("Fabricação", "Sandro Mandela"));

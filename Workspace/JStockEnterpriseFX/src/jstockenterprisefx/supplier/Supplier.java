@@ -164,8 +164,6 @@ public class Supplier extends Entity {
 
 	@Override
 	public String toString() {
-		return new StringBuffer(super.toString().replace("}", ""))
-				.append(", nomeFantasia : ").append(nomeFantasia.get())
-				.append(", cnpj : ").append(cnpj.get()).append("}").toString();
+		return getRazaoSocial();
 	}
 }

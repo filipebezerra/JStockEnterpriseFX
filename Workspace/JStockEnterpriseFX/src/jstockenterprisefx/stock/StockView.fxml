@@ -9,58 +9,58 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jstockenterprisefx.supplier.SupplierController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jstockenterprisefx.stock.StockController">
    <children>
       <GridPane layoutX="60.0" layoutY="30.0" prefHeight="400.0" prefWidth="770.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
          <children>
-            <Label text="Data Cadastro:" GridPane.rowIndex="3" />
+            <Label text="Data Cadastro:" GridPane.rowIndex="2" />
             <Label text="Tipo Operação:" />
-            <Label text="Fornecedor" GridPane.rowIndex="1" />
-            <Label text="Setor:" GridPane.rowIndex="2" />
-            <DatePicker GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-            <ComboBox prefHeight="31.0" prefWidth="319.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-            <ComboBox prefHeight="31.0" prefWidth="319.0" GridPane.columnIndex="1" GridPane.columnSpan="2" />
-            <ComboBox prefHeight="31.0" prefWidth="319.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-            <Label text="Incluir Item" GridPane.rowIndex="4">
+            <Label fx:id="mSupplierOrDepartmentLabel" text="Fornecedor" GridPane.rowIndex="1" />
+            <DatePicker fx:id="mRegistryDateField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+            <ComboBox fx:id="mSupplierField" prefHeight="31.0" prefWidth="319.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+            <ComboBox fx:id="mOperationTypeField" prefHeight="31.0" prefWidth="319.0" GridPane.columnIndex="1" GridPane.columnSpan="2" />
+            <ComboBox fx:id="mDepartamentField" prefHeight="31.0" prefWidth="319.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+            <Label text="Incluir Item" GridPane.rowIndex="3">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Separator prefWidth="200.0" style="-fx-background-color: #000000;" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4" />
-            <Label text="Código:" GridPane.rowIndex="5" />
-            <Label text="Quantidade:" GridPane.rowIndex="6" />
-            <TextField maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="90.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <TextField maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="90.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <TextField editable="false" opacity="0.5" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5">
+            <Separator prefWidth="200.0" style="-fx-background-color: #000000;" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+            <Label text="Código:" GridPane.rowIndex="4" />
+            <Label text="Quantidade:" GridPane.rowIndex="5" />
+            <TextField fx:id="mItemIdField" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#handleItemSearchById" prefHeight="31.0" prefWidth="90.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="mItemQuantityField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="31.0" prefWidth="90.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="mItemDescriptionField" editable="false" opacity="0.5" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets left="105.0" />
                </GridPane.margin>
             </TextField>
-            <Button mnemonicParsing="false" text="Incluir" GridPane.columnIndex="1" GridPane.rowIndex="6">
+            <Button fx:id="mAddItemButton" disable="true" mnemonicParsing="false" onAction="#handleAddItem" text="Incluir" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets left="105.0" />
                </GridPane.margin>
             </Button>
-            <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="7">
+            <TableView fx:id="mItensDataTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="6">
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
                <columns>
-                  <TableColumn prefWidth="75.0" text="Código" />
-                  <TableColumn prefWidth="75.0" text="Item" />
-                  <TableColumn prefWidth="75.0" text="Quantidade" />
+                  <TableColumn fx:id="mEntryIdColumn" prefWidth="75.0" text="Código" />
+                  <TableColumn fx:id="mItemColumn" prefWidth="75.0" text="Item" />
+                  <TableColumn fx:id="mItemQuantityColumn" prefWidth="75.0" text="Quantidade" />
                </columns>
             </TableView>
-            <Button mnemonicParsing="false" text="Limpar" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-            <Button mnemonicParsing="false" text="Concluir" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+            <Button fx:id="mResetFieldsButton" mnemonicParsing="false" onAction="#handleResetAllFields" text="Limpar" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Button fx:id="mFinishButton" mnemonicParsing="false" text="Concluir" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+            <Button fx:id="mResetItemFields" mnemonicParsing="false" onAction="#handleResetItemFields" text="Limpar" GridPane.columnIndex="2" GridPane.rowIndex="5" />
          </children>
          <columnConstraints>
             <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="125.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
