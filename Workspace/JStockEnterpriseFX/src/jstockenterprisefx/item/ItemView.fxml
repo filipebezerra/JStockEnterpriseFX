@@ -9,20 +9,20 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jstockenterprisefx.supplier.SupplierController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jstockenterprisefx.item.ItemController">
    <children>
-      <TabPane layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TabPane fx:id="mTabPane" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
-          <Tab text="Pesquisa">
+          <Tab fx:id="mSearchTab" text="Pesquisa">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutX="83.0" layoutY="59.0" prefHeight="254.0" prefWidth="770.0" AnchorPane.bottomAnchor="61.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="61.0">
+                        <TableView fx:id="mDataTable" layoutX="83.0" layoutY="59.0" prefHeight="254.0" prefWidth="770.0" AnchorPane.bottomAnchor="61.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="61.0">
                           <columns>
-                            <TableColumn editable="false" minWidth="65.0" prefWidth="100.0" text="Código" />
-                            <TableColumn editable="false" minWidth="100.0" prefWidth="300.0" text="Descriçao" />
-                              <TableColumn editable="false" minWidth="50.0" prefWidth="100.0" text="Qtde Estoque" />
-                              <TableColumn prefWidth="75.0" text="Última Atualização" />
+                            <TableColumn fx:id="mIdColumn" editable="false" minWidth="65.0" prefWidth="100.0" text="Código" />
+                            <TableColumn fx:id="mDescriptionColumn" editable="false" minWidth="100.0" prefWidth="300.0" text="Descriçao" />
+                              <TableColumn fx:id="mStockQuantityColumn" editable="false" minWidth="50.0" prefWidth="100.0" text="Qtde Estoque" />
+                              <TableColumn fx:id="mLastStockUpdateColumn" prefWidth="75.0" text="Última Atualização" />
                           </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -30,22 +30,22 @@
                         </TableView>
                         <HBox layoutX="647.0" layoutY="515.0" spacing="15.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
                            <children>
-                              <Button layoutX="647.0" layoutY="515.0" mnemonicParsing="false" text="Editar" />
-                              <Button layoutX="721.0" layoutY="509.0" mnemonicParsing="false" text="Excluir" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+                              <Button fx:id="mEditButton" layoutX="647.0" layoutY="515.0" mnemonicParsing="false" onAction="#handleEditAction" text="Editar" />
+                              <Button fx:id="mDeleteButton" layoutX="721.0" layoutY="509.0" mnemonicParsing="false" onAction="#handleDeleteAction" text="Excluir" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
                            </children>
                         </HBox>
                         <HBox layoutX="28.0" layoutY="14.0" spacing="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
                            <children>
-                              <ComboBox prefHeight="31.0" prefWidth="214.0" promptText="Selecione uma pesquisa" />
-                              <TextField layoutX="28.0" layoutY="14.0" nodeOrientation="LEFT_TO_RIGHT" promptText="Pesquise por um item" HBox.hgrow="ALWAYS" />
-                              <Button defaultButton="true" layoutX="702.0" layoutY="15.0" mnemonicParsing="false" text="Pesquisar" />
+                              <ComboBox fx:id="mSearchOptionsField" prefHeight="31.0" prefWidth="214.0" promptText="Selecione uma pesquisa" />
+                              <TextField fx:id="mSearchField" layoutX="28.0" layoutY="14.0" nodeOrientation="LEFT_TO_RIGHT" promptText="Pesquise por um item" HBox.hgrow="ALWAYS" />
+                              <Button fx:id="mSearchButton" defaultButton="true" layoutX="702.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleSearchAction" text="Pesquisar" />
                            </children>
                         </HBox>
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Cadastro">
+          <Tab fx:id="mRegisterTab" text="Cadastro">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -69,25 +69,25 @@
                               <Label text="Código:" />
                               <Label text="Data Cadastro:" GridPane.rowIndex="1" />
                               <Label text="Descrição:" GridPane.rowIndex="2" />
-                              <TextField editable="false" opacity="0.5" GridPane.columnIndex="1" />
+                              <TextField fx:id="mIdField" editable="false" opacity="0.5" GridPane.columnIndex="1" />
                               <Label text="Grupo:" GridPane.rowIndex="3" />
-                              <Button mnemonicParsing="false" text="Limpar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="8" GridPane.valignment="BOTTOM">
+                              <Button fx:id="mResetFieldsButton" mnemonicParsing="false" onAction="#handleResetFieldsAction" text="Limpar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="8" GridPane.valignment="BOTTOM">
                                  <GridPane.margin>
                                     <Insets right="75.0" />
                                  </GridPane.margin>
                               </Button>
-                              <Button defaultButton="true" mnemonicParsing="false" text="Salvar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="8" GridPane.valignment="BOTTOM" />
+                              <Button fx:id="mSaveButton" defaultButton="true" mnemonicParsing="false" onAction="#handleSaveAction" text="Salvar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="8" GridPane.valignment="BOTTOM" />
                               <Label text="Preço Custo:" GridPane.rowIndex="4" />
                               <Label text="Preço Venda:" GridPane.rowIndex="5" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <TextField fx:id="mDescriptionField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField fx:id="mCostPriceField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <TextField fx:id="mSalePriceField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                               <Label text="Qtde Estoque:" GridPane.rowIndex="6" />
                               <Label text="Últ. Atualização" GridPane.rowIndex="7" />
-                              <TextField editable="false" opacity="0.5" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                              <TextField editable="false" opacity="0.5" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                              <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <ComboBox prefHeight="31.0" prefWidth="319.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextField fx:id="mStockQuantityField" editable="false" opacity="0.5" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                              <TextField fx:id="mLastStockUpdateField" editable="false" opacity="0.5" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                              <DatePicker fx:id="mCreatedAtField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <ComboBox fx:id="mGroupField" prefHeight="31.0" prefWidth="319.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                            </children>
                         </GridPane>
                      </children></AnchorPane>

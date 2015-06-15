@@ -53,4 +53,16 @@ public class MainController {
 			e.printStackTrace();
 		}
 	}
+
+	@FXML
+	private void showItemView() {
+		try {
+			AnchorPane itemView = (AnchorPane) FXMLLoader.load(getClass()
+					.getResource("../item/ItemView.fxml"));
+			mMainApp.getMainView().setCenter(itemView);
+		} catch (IOException e) {
+			// TODO treat exception
+			e.printStackTrace();
+		}
+	}
 }

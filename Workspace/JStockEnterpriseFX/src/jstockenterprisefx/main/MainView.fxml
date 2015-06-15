@@ -14,7 +14,7 @@
               <MenuItem mnemonicParsing="false" onAction="#showGroupView" text="Grupos" />
                   <MenuItem mnemonicParsing="false" onAction="#showDepartamentView" text="Setores" />
                   <MenuItem mnemonicParsing="false" onAction="#showSupplierView" text="Fornecedores" />
-                  <MenuItem mnemonicParsing="false" text="Itens" />
+                  <MenuItem mnemonicParsing="false" onAction="#showItemView" text="Itens" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Movimentação">
