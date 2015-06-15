@@ -12,7 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import jstockenterprisefx.base.model.Entity;
-import jstockenterprisefx.group.Group;
+import jstockenterprisefx.base.model.NamedEntity;
 
 public class Controller<T extends Entity> {
 
@@ -49,7 +49,7 @@ public class Controller<T extends Entity> {
 	protected TableColumn<T, Integer> mIdColumn;
 
 	@FXML
-	protected TableColumn<Group, String> mNameColumn;
+	protected TableColumn<T, String> mNameColumn;
 
 	@FXML
 	protected TextField mIdField;
@@ -100,6 +100,10 @@ public class Controller<T extends Entity> {
 		if (mIdColumn != null)
 			mIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 
+		if (mNameColumn != null)
+			mNameColumn.setCellValueFactory(cellData -> ((NamedEntity) cellData
+					.getValue()).nameProperty());
+
 		if (mTabPane != null)
 			mTabPane.getSelectionModel()
 					.selectedItemProperty()
@@ -137,6 +141,8 @@ public class Controller<T extends Entity> {
 		} else {
 			mEditingModelObject.set(value);
 			mIdField.setText(String.valueOf(value.getId()));
+			if (mNameField != null)
+				mNameField.setText(((NamedEntity) value).getName());
 			mTabPane.getSelectionModel().select(mRegisterTab);
 		}
 	}
@@ -156,7 +162,8 @@ public class Controller<T extends Entity> {
 	@FXML
 	protected void handleResetFieldsAction() {
 		mEditingModelObject.set(null);
-		mIdField.setText(null);
+		if (mIdField != null)
+			mIdField.setText(null);
 	}
 
 	@FXML

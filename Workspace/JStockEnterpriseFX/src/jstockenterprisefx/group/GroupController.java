@@ -22,20 +22,12 @@ public class GroupController extends Controller<Group> {
 
 		super.initialize();
 
-		mNameColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.nameProperty());
 		mGroupTypeColumn.setCellValueFactory(cellData -> cellData.getValue()
 				.groupTypeProperty());
 		
 		mGroupTypeField.getItems().addAll(GroupType.values());
 
 		// mSearchField.setOnInputMethodTextChanged(value);
-	}
-
-	@Override
-	protected void handleTableSelectionChanged(final Group oldValue,
-			final Group newValue) {
-		super.handleTableSelectionChanged(oldValue, newValue);
 	}
 	
 	@Override

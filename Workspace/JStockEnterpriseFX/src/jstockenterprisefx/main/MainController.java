@@ -19,11 +19,23 @@ public class MainController {
 	}
 
 	@FXML
-	private void showGroupsView() {
+	private void showGroupView() {
 		try {
 			AnchorPane groupView = (AnchorPane) FXMLLoader.load(getClass()
 					.getResource("../group/GroupView.fxml"));
 			mMainApp.getMainView().setCenter(groupView);
+		} catch (IOException e) {
+			// TODO treat exception
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	private void showDepartamentView() {
+		try {
+			AnchorPane departmentView = (AnchorPane) FXMLLoader.load(getClass()
+					.getResource("../department/DepartmentView.fxml"));
+			mMainApp.getMainView().setCenter(departmentView);
 		} catch (IOException e) {
 			// TODO treat exception
 			e.printStackTrace();
