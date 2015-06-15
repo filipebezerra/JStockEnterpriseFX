@@ -25,6 +25,6 @@ public abstract class Entity {
 	@Override
 	public String toString() {
 		return new StringBuffer(getClass().getSimpleName()).append(" {id : ")
-				.append(String.valueOf(id)).append("}").toString();
+				.append(String.valueOf(id.get())).append("}").toString();
 	}
 }

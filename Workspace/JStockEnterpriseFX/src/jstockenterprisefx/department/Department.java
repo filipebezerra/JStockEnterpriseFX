@@ -32,7 +32,8 @@ public class Department extends NamedEntity {
 	@Override
 	public String toString() {
 		return new StringBuffer(super.toString().replace("}", ""))
-				.append(", responsable : ").append(responsable).append("}")
+				.append(", responsable : ").append(responsable.get())
+				.append("}")
 				.toString();
 	}
 }

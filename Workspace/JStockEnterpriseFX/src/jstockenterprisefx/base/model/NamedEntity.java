@@ -22,6 +22,6 @@ public abstract class NamedEntity extends Entity {
 	@Override
 	public String toString() {
 		return new StringBuffer(super.toString().replace("}", ""))
-				.append(", name : ").append(name).append("}").toString();
+				.append(", name : ").append(name.get()).append("}").toString();
 	}
 }
