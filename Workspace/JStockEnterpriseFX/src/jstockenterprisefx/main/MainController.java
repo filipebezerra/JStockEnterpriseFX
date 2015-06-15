@@ -14,12 +14,16 @@ public class MainController {
 		super();
 	}
 
+	public void setMainApp(final MainApp mainApp) {
+		mMainApp = mainApp;
+	}
+
 	@FXML
 	private void showGroupsView() {
 		try {
-			AnchorPane groupsView = (AnchorPane) FXMLLoader.load(getClass()
-					.getResource("groups/GroupsView.fxml"));
-			mMainApp.getMainView().setCenter(groupsView);
+			AnchorPane groupView = (AnchorPane) FXMLLoader.load(getClass()
+					.getResource("../group/GroupView.fxml"));
+			mMainApp.getMainView().setCenter(groupView);
 		} catch (IOException e) {
 			// TODO treat exception
 			e.printStackTrace();

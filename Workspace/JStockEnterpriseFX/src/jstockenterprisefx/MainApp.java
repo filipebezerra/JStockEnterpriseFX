@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import jstockenterprisefx.main.MainController;
 
 public class MainApp extends Application {
 	private Stage mPrimaryStage;
@@ -26,8 +27,12 @@ public class MainApp extends Application {
 
 	private void showMainView() {
 		try {
-			mMainView = (BorderPane) FXMLLoader.load(getClass().getResource(
-					"main/MainView.fxml"));
+			FXMLLoader fxmlLoader = new FXMLLoader();
+			fxmlLoader
+					.setLocation(getClass().getResource("main/MainView.fxml"));
+			mMainView = (BorderPane) fxmlLoader.load();
+			MainController controller = fxmlLoader.getController();
+			controller.setMainApp(this);
 
 			Scene scene = new Scene(mMainView);
 			scene.getStylesheets().add(
