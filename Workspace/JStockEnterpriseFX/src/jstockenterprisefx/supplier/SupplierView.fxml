@@ -11,18 +11,18 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jstockenterprisefx.supplier.SupplierController">
    <children>
-      <TabPane layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TabPane fx:id="mTabPane" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
-          <Tab text="Pesquisa">
+          <Tab fx:id="mSearchTab" text="Pesquisa">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutX="83.0" layoutY="59.0" prefHeight="254.0" prefWidth="770.0" AnchorPane.bottomAnchor="61.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="61.0">
+                        <TableView fx:id="mDataTable" layoutX="83.0" layoutY="59.0" prefHeight="254.0" prefWidth="770.0" AnchorPane.bottomAnchor="61.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="61.0">
                           <columns>
-                            <TableColumn editable="false" minWidth="65.0" prefWidth="100.0" text="Código" />
-                            <TableColumn editable="false" minWidth="100.0" prefWidth="300.0" text="Razão Social" />
-                              <TableColumn editable="false" minWidth="50.0" prefWidth="100.0" text="CNPJ" />
-                              <TableColumn prefWidth="75.0" text="Telefone" />
+                            <TableColumn fx:id="mIdColumn" editable="false" minWidth="65.0" prefWidth="100.0" text="Código" />
+                            <TableColumn fx:id="mRazaoSocialColumn" editable="false" minWidth="100.0" prefWidth="300.0" text="Razão Social" />
+                              <TableColumn fx:id="mCnpjColumn" editable="false" minWidth="50.0" prefWidth="100.0" text="CNPJ" />
+                              <TableColumn fx:id="mTelefoneColumn" prefWidth="75.0" text="Telefone" />
                           </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -30,28 +30,29 @@
                         </TableView>
                         <HBox layoutX="647.0" layoutY="515.0" spacing="15.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
                            <children>
-                              <Button layoutX="647.0" layoutY="515.0" mnemonicParsing="false" text="Editar" />
-                              <Button layoutX="721.0" layoutY="509.0" mnemonicParsing="false" text="Excluir" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+                              <Button fx:id="mEditButton" layoutX="647.0" layoutY="515.0" mnemonicParsing="false" onAction="#handleEditAction" text="Editar" />
+                              <Button fx:id="mDeleteButton" layoutX="721.0" layoutY="509.0" mnemonicParsing="false" onAction="#handleDeleteAction" text="Excluir" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
                            </children>
                         </HBox>
                         <HBox layoutX="28.0" layoutY="14.0" spacing="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
                            <children>
-                              <TextField layoutX="28.0" layoutY="14.0" nodeOrientation="LEFT_TO_RIGHT" promptText="Pesquise por um fornecedor" HBox.hgrow="ALWAYS" />
-                              <Button defaultButton="true" layoutX="702.0" layoutY="15.0" mnemonicParsing="false" text="Pesquisar" />
+                              <TextField fx:id="mSearchField" layoutX="28.0" layoutY="14.0" nodeOrientation="LEFT_TO_RIGHT" promptText="Pesquise por um fornecedor" HBox.hgrow="ALWAYS" />
+                              <Button fx:id="mSearchButton" defaultButton="true" layoutX="702.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleSearchAction" text="Pesquisar" />
                            </children>
                         </HBox>
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Cadastro">
+          <Tab fx:id="mRegisterTab" text="Cadastro">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <GridPane layoutX="50.0" layoutY="20.0" prefHeight="350.0" prefWidth="673.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+                        <GridPane layoutX="50.0" layoutY="20.0" prefHeight="500.0" prefWidth="673.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="125.0" />
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -61,26 +62,43 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" vgrow="SOMETIMES" />
+                              <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" vgrow="SOMETIMES" />
+                              <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" vgrow="SOMETIMES" />
+                              <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" vgrow="SOMETIMES" />
+                              <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
                               <Label text="Código:" />
-                              <Label text="Nome Fantsia:" GridPane.rowIndex="1" />
+                              <Label text="Nome Fantasia:" GridPane.rowIndex="1" />
                               <Label text="Razão Social:" GridPane.rowIndex="2" />
-                              <TextField editable="false" opacity="0.5" GridPane.columnIndex="1" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="mIdField" editable="false" opacity="0.5" GridPane.columnIndex="1" GridPane.columnSpan="2" />
+                              <TextField fx:id="mNomeFantasiaField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
                               <Label text="CNPJ:" GridPane.rowIndex="3" />
-                              <Button mnemonicParsing="false" text="Limpar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" GridPane.valignment="BOTTOM">
+                              <Button fx:id="mResetFieldsButton" mnemonicParsing="false" onAction="#handleResetFieldsAction" text="Limpar" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="10" GridPane.valignment="BOTTOM">
                                  <GridPane.margin>
                                     <Insets right="75.0" />
                                  </GridPane.margin>
                               </Button>
-                              <Button defaultButton="true" mnemonicParsing="false" text="Salvar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" GridPane.valignment="BOTTOM" />
+                              <Button fx:id="mSaveButton" defaultButton="true" mnemonicParsing="false" onAction="#handleSaveAction" text="Salvar" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="10" GridPane.valignment="BOTTOM" />
                               <Label text="Telefone:" GridPane.rowIndex="4" />
                               <Label text="E-mail:" GridPane.rowIndex="5" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <TextField fx:id="mRazaoSocialField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                              <TextField fx:id="mCnpjField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+                              <TextField fx:id="mTelefoneField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+                              <TextField fx:id="mEmailField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+                              <Label text="Logradouro:" GridPane.rowIndex="6" />
+                              <TextField fx:id="mLogradouroField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6" />
+                              <Label text="Bairro:" GridPane.rowIndex="7" />
+                              <Label text="Cidade/UF:" GridPane.rowIndex="8" />
+                              <Label text="CEP:" GridPane.rowIndex="9" />
+                              <TextField fx:id="mBairroField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+                              <TextField fx:id="mCidadeField" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                              <TextField fx:id="mCepField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="9" />
+                              <ComboBox fx:id="mUfField" prefHeight="31.0" prefWidth="161.0" promptText="Selecione um..." GridPane.columnIndex="2" GridPane.rowIndex="8">
+                                 <GridPane.margin>
+                                    <Insets left="15.0" />
+                                 </GridPane.margin>
+                              </ComboBox>
                            </children>
                         </GridPane>
                      </children></AnchorPane>

@@ -41,4 +41,16 @@ public class MainController {
 			e.printStackTrace();
 		}
 	}
+
+	@FXML
+	private void showSupplierView() {
+		try {
+			AnchorPane supplierView = (AnchorPane) FXMLLoader.load(getClass()
+					.getResource("../supplier/SupplierView.fxml"));
+			mMainApp.getMainView().setCenter(supplierView);
+		} catch (IOException e) {
+			// TODO treat exception
+			e.printStackTrace();
+		}
+	}
 }
