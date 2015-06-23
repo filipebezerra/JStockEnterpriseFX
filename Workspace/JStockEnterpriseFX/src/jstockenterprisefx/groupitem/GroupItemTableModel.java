@@ -6,7 +6,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import jstockenterprisefx.base.tablemodel.NamedTableModel;
 
-public class GroupItemTableModel extends NamedTableModel {
+public class GroupItemTableModel extends NamedTableModel<Short> {
 	private ObjectProperty<GroupType> groupType = new SimpleObjectProperty<GroupType>(
 			this, "groupType", null);
 	private StringProperty observation = new SimpleStringProperty(this,

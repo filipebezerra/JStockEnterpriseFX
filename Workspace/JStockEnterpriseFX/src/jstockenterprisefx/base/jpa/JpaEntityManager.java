@@ -14,23 +14,23 @@ public final class JpaEntityManager {
 		mEntityManager = mEntityManagerFactory.createEntityManager();
 	}
 	
-	public EntityManager getEntityManager() {
+	public static EntityManager getEntityManager() {
 		return mEntityManager;
 	}
 
-	public void beginTransaction() {
+	public static void beginTransaction() {
 		mEntityManager.getTransaction().begin();
 	}
 	
-	public void commit() {
+	public static void commit() {
 		mEntityManager.getTransaction().commit();
 	}
 	
-	public void rollback() {
+	public static void rollback() {
 		mEntityManager.getTransaction().rollback();
 	}
 	
-	public void close() {
+	public static void close() {
 		mEntityManager.close();
 		mEntityManagerFactory.close();
 	}

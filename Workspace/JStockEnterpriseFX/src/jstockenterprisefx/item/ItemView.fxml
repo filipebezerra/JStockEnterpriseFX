@@ -87,7 +87,7 @@
                               <TextField fx:id="mStockQuantityField" editable="false" opacity="0.5" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                               <TextField fx:id="mLastStockUpdateField" editable="false" opacity="0.5" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                               <DatePicker fx:id="mCreatedAtField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <ComboBox fx:id="mGroupField" prefHeight="31.0" prefWidth="319.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <ComboBox fx:id="mGroupItemField" prefHeight="31.0" prefWidth="319.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                            </children>
                         </GridPane>
                      </children></AnchorPane>

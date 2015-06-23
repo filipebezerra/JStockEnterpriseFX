@@ -3,7 +3,7 @@ package jstockenterprisefx.base.tablemodel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public abstract class NamedTableModel extends BaseTableModel {
+public abstract class NamedTableModel<ID> extends BaseTableModel<ID> {
 	protected final StringProperty name = new SimpleStringProperty(this,
 			"name", null);
 

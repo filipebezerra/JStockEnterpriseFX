@@ -1,6 +1,6 @@
 package jstockenterprisefx.item;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,15 +12,15 @@ public class ItemMockData {
 
 	static {
 		itemData.add(new ItemTableModel("Item A", GroupItemMockData.getGroupData().get(0),
-				12.5, 105, LocalDate.now()));
+				12.5, 105, LocalDateTime.now()));
 		itemData.add(new ItemTableModel("Item ABC", GroupItemMockData.getGroupData().get(2),
-				125d, 22, LocalDate.now()));
+				125d, 22, LocalDateTime.now()));
 		itemData.add(new ItemTableModel("Item CBA", GroupItemMockData.getGroupData().get(3),
-				20.5, 2000, LocalDate.now()));
+				20.5, 2000, LocalDateTime.now()));
 		itemData.add(new ItemTableModel("Item XYZ", GroupItemMockData.getGroupData().get(4),
-				1200d, 5, LocalDate.now()));
+				1200d, 5, LocalDateTime.now()));
 		itemData.add(new ItemTableModel("Item DIY", GroupItemMockData.getGroupData().get(5),
-				10.5, 10, LocalDate.now()));
+				10.5, 10, LocalDateTime.now()));
 	}
 
 	public static ObservableList<ItemTableModel> getItemData() {

@@ -1,6 +1,6 @@
 package jstockenterprisefx.item;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
@@ -13,31 +13,31 @@ import javafx.beans.property.StringProperty;
 import jstockenterprisefx.base.tablemodel.BaseTableModel;
 import jstockenterprisefx.groupitem.GroupItemTableModel;
 
-public class ItemTableModel extends BaseTableModel {
-	private ObjectProperty<LocalDate> createdAt = new SimpleObjectProperty<>(
-			this, "createdAt", LocalDate.now());
+public class ItemTableModel extends BaseTableModel<Long> {
+	private ObjectProperty<LocalDateTime> createdAt = new SimpleObjectProperty<>(
+			this, "createdAt", null);
 
 	private StringProperty description = new SimpleStringProperty(this,
 			"description", null);
-
-	private ObjectProperty<GroupItemTableModel> group = new SimpleObjectProperty<>(this,
-			"group", null);
-
+	
 	private DoubleProperty costPrice = new SimpleDoubleProperty(this,
 			"costPrice", 0);
 
 	private DoubleProperty salePrice = new SimpleDoubleProperty(this,
 			"salePrice", 0);
-
+	
 	private ReadOnlyIntegerWrapper stockQuantity = new ReadOnlyIntegerWrapper(
 			this, "stockQuantity", 0);
 
-	private ReadOnlyObjectWrapper<LocalDate> lastStockUpdate = new ReadOnlyObjectWrapper<LocalDate>(
+	private ReadOnlyObjectWrapper<LocalDateTime> lastStockUpdate = new ReadOnlyObjectWrapper<LocalDateTime>(
 			this, "lastStockUpdate", null);
+
+	private ObjectProperty<GroupItemTableModel> group = new SimpleObjectProperty<>(this,
+			"group", null);
 
 	public ItemTableModel(final String description, final GroupItemTableModel group,
 			final Double salePrice, final Integer stockQuantity,
-			final LocalDate lastStockUpdate) {
+			final LocalDateTime lastStockUpdate) {
 		this.description.set(description);
 		this.group.set(group);
 		this.salePrice.set(salePrice);
@@ -45,15 +45,15 @@ public class ItemTableModel extends BaseTableModel {
 		this.lastStockUpdate.set(lastStockUpdate);
 	}
 
-	public LocalDate getCreatedAt() {
+	public LocalDateTime getCreatedAt() {
 		return createdAt.get();
 	}
 
-	public void setCreatedAt(final LocalDate createdAt) {
+	public void setCreatedAt(final LocalDateTime createdAt) {
 		this.createdAt.set(createdAt);
 	}
 
-	public ObjectProperty<LocalDate> createdAtProperty() {
+	public ObjectProperty<LocalDateTime> createdAtProperty() {
 		return createdAt;
 	}
 
@@ -69,38 +69,26 @@ public class ItemTableModel extends BaseTableModel {
 		return description;
 	}
 
-	public GroupItemTableModel getGroup() {
-		return group.get();
-	}
-
-	public void setGroup(final GroupItemTableModel group) {
-		this.group.set(group);
-	}
-
-	public ObjectProperty<GroupItemTableModel> groupProperty() {
-		return group;
-	}
-
 	public Double getCostPrice() {
 		return costPrice.get();
 	}
-
+	
 	public void setCostPrice(final Double costPrice) {
 		this.costPrice.set(costPrice);
 	}
-
+	
 	public DoubleProperty costPriceProperty() {
 		return costPrice;
 	}
-
+	
 	public Double getSalePrice() {
 		return salePrice.get();
 	}
-
+	
 	public void setSalePrice(final Double salePrice) {
 		this.salePrice.set(salePrice);
 	}
-
+	
 	public DoubleProperty salePriceProperty() {
 		return salePrice;
 	}
@@ -117,18 +105,30 @@ public class ItemTableModel extends BaseTableModel {
 		return stockQuantity;
 	}
 
-	public LocalDate getLastStockUpdate() {
+	public LocalDateTime getLastStockUpdate() {
 		return lastStockUpdate.get();
 	}
 
-	public void setLastStockUpdate(final LocalDate lastStockUpdate) {
+	public void setLastStockUpdate(final LocalDateTime lastStockUpdate) {
 		this.lastStockUpdate.set(lastStockUpdate);
 	}
 
-	public ReadOnlyObjectWrapper<LocalDate> lastStockUpdateProperty() {
+	public ReadOnlyObjectWrapper<LocalDateTime> lastStockUpdateProperty() {
 		return lastStockUpdate;
 	}
 
+	public GroupItemTableModel getGroup() {
+		return group.get();
+	}
+	
+	public void setGroup(final GroupItemTableModel group) {
+		this.group.set(group);
+	}
+	
+	public ObjectProperty<GroupItemTableModel> groupProperty() {
+		return group;
+	}
+	
 	@Override
 	public String toString() {
 		return getDescription();

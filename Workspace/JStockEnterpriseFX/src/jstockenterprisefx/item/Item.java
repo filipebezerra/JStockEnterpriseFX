@@ -27,7 +27,7 @@ import org.hibernate.annotations.GenerationTime;
 @NamedQueries({
 		@NamedQuery(name = "Item.findAll", query = "SELECT i FROM Item i"),
 		@NamedQuery(name = "Item.findById", query = "SELECT i FROM Item i WHERE i.id = :id"),
-		@NamedQuery(name = "Item.findByCreateAt", query = "SELECT i FROM Item i WHERE i.createAt = :createAt"),
+		@NamedQuery(name = "Item.findByCreatedAt", query = "SELECT i FROM Item i WHERE i.createdAt = :createdAt"),
 		@NamedQuery(name = "Item.findByDescription", query = "SELECT i FROM Item i WHERE i.description = :description"),
 		@NamedQuery(name = "Item.findByStockQuantity", query = "SELECT i FROM Item i WHERE i.stockQuantity = :stockQuantity"),
 		@NamedQuery(name = "Item.findByLastStockUpdate", query = "SELECT i FROM Item i WHERE i.lastStockUpdate = :lastStockUpdate"),
@@ -37,7 +37,7 @@ public class Item extends BaseEntity<Long> implements Serializable {
 
 	@Generated(GenerationTime.ALWAYS)
 	@Column(insertable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-	private LocalDateTime createAt;
+	private LocalDateTime createdAt;
 
 	@Basic(optional = false)
 	@Column(nullable = false, length = 120)
@@ -75,11 +75,11 @@ public class Item extends BaseEntity<Long> implements Serializable {
 		this(null, null, description, costPrice, salePrice, stockQuantity, null, groupItem);
 	}
 
-	public Item(final Long id, final LocalDateTime createAt, final String description,
+	public Item(final Long id, final LocalDateTime createdAt, final String description,
 			final BigDecimal costPrice, final BigDecimal salePrice,
 			final int stockQuantity, final LocalDateTime lastStockUpdate, final GroupItem groupItem) {
 		this.id = id;
-		this.createAt = createAt;
+		this.createdAt = createdAt;
 		this.description = description;
 		this.costPrice = costPrice;
 		this.salePrice = salePrice;
@@ -88,12 +88,12 @@ public class Item extends BaseEntity<Long> implements Serializable {
 		this.groupItem = groupItem;
 	}
 
-	public LocalDateTime getCreateAt() {
-		return createAt;
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
 	}
 
-	public void setCreateAt(final LocalDateTime createAt) {
-		this.createAt = createAt;
+	public void setCreatedAt(final LocalDateTime createdAt) {
+		this.createdAt = createdAt;
 	}
 
 	public String getDescription() {

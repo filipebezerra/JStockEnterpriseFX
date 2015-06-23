@@ -2,6 +2,7 @@ package jstockenterprisefx.base.controller;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
@@ -43,37 +44,10 @@ public class Controller<T extends BaseTableModel> {
 	}
 
 	@FXML
-	protected TableView<T> mDataTable;
-
-	@FXML
-	protected TableColumn<T, Integer> mIdColumn;
-
-	@FXML
 	protected TableColumn<T, String> mNameColumn;
 
 	@FXML
-	protected TextField mIdField;
-
-	@FXML
 	protected TextField mNameField;
-
-	@FXML
-	protected TextField mSearchField;
-
-	@FXML
-	protected Button mSearchButton;
-
-	@FXML
-	protected Button mEditButton;
-
-	@FXML
-	protected Button mDeleteButton;
-
-	@FXML
-	protected Button mResetFieldsButton;
-
-	@FXML
-	protected Button mSaveButton;
 
 	@FXML
 	protected TabPane mTabPane;
@@ -82,7 +56,34 @@ public class Controller<T extends BaseTableModel> {
 	protected Tab mSearchTab;
 
 	@FXML
+	protected TableView<T> mDataTable;
+
+	@FXML
+	protected TableColumn<T, Integer> mIdColumn;
+
+	@FXML
+	protected Button mEditButton;
+
+	@FXML
+	protected Button mDeleteButton;
+
+	@FXML
+	protected TextField mSearchField;
+
+	@FXML
+	protected Button mSearchButton;
+
+	@FXML
 	protected Tab mRegisterTab;
+
+	@FXML
+	protected TextField mIdField;
+
+	@FXML
+	protected Button mResetFieldsButton;
+
+	@FXML
+	protected Button mSaveButton;
 
 	@FXML
 	protected void initialize() {
@@ -101,8 +102,9 @@ public class Controller<T extends BaseTableModel> {
 			mIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 
 		if (mNameColumn != null)
-			mNameColumn.setCellValueFactory(cellData -> ((NamedTableModel) cellData
-					.getValue()).nameProperty());
+			mNameColumn
+					.setCellValueFactory(cellData -> ((NamedTableModel) cellData
+							.getValue()).nameProperty());
 
 		if (mTabPane != null)
 			mTabPane.getSelectionModel()
@@ -127,12 +129,19 @@ public class Controller<T extends BaseTableModel> {
 	}
 
 	@FXML
-	protected void handleSearchAction() {
+	protected void handleDeleteAction(final ActionEvent event) {
+		T value = mDataTable.getSelectionModel().selectedItemProperty()
+				.getValue();
 
+		if (value == null) {
+
+		} else
+			mEditingModelObject.set(null);
+		mDataTable.getItems().remove(value);
 	}
 
 	@FXML
-	protected void handleEditAction() {
+	protected void handleEditAction(final ActionEvent event) {
 		T value = mDataTable.getSelectionModel().selectedItemProperty()
 				.getValue();
 
@@ -148,35 +157,31 @@ public class Controller<T extends BaseTableModel> {
 	}
 
 	@FXML
-	protected void handleDeleteAction() {
-		T value = mDataTable.getSelectionModel().selectedItemProperty()
-				.getValue();
-
-		if (value == null) {
-
-		} else
-			mEditingModelObject.set(null);
-			mDataTable.getItems().remove(value);
-	}
-
-	@FXML
-	protected void handleResetFieldsAction() {
+	protected void handleResetFieldsAction(final ActionEvent event) {
 		mEditingModelObject.set(null);
 		if (mIdField != null)
 			mIdField.setText(null);
 	}
 
 	@FXML
-	protected void handleSaveAction() {
+	protected void handleSaveAction(final ActionEvent event) {
+
+	}
+
+	@FXML
+	protected void handleSearchAction(final ActionEvent event) {
 
 	}
 
 	protected void handleTabSelectionChanged(final Tab oldTab, final Tab newTab) {
+
 	}
 
 	protected void handleTableSelectionChanged(final T oldValue,
 			final T newValue) {
-		if (mEditButton != null) mEditButton.setDisable(newValue == null);
-		if (mDeleteButton != null) mDeleteButton.setDisable(newValue == null);
+		if (mEditButton != null)
+			mEditButton.setDisable(newValue == null);
+		if (mDeleteButton != null)
+			mDeleteButton.setDisable(newValue == null);
 	}
 }

@@ -1,24 +1,19 @@
 package jstockenterprisefx.base.tablemodel;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 
-import javafx.beans.property.ReadOnlyIntegerWrapper;
+public abstract class BaseTableModel<ID> {
+	protected final ReadOnlyObjectWrapper<ID> id = new ReadOnlyObjectWrapper<>(this, "id", null);
 
-public abstract class BaseTableModel {
-	private static AtomicInteger idSequence = new AtomicInteger(0);
-	
-	protected final ReadOnlyIntegerWrapper id = new ReadOnlyIntegerWrapper(
-			this, "id", idSequence.incrementAndGet());
-
-	public int getId() {
+	public ID getId() {
 		return id.get();
 	}
 
-	public void setId(final int id) {
+	public void setId(final ID id) {
 		this.id.set(id);
 	}
 
-	public ReadOnlyIntegerWrapper idProperty() {
+	public ReadOnlyObjectWrapper<ID> idProperty() {
 		return id;
 	}
 

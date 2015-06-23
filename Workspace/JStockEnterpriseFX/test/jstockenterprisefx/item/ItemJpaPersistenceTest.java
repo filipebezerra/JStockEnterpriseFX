@@ -40,7 +40,7 @@ public class ItemJpaPersistenceTest {
 		dao.create(newItem);
 		jpa.commit();
 		
-		final LocalDateTime createdAt = newItem.getCreateAt();
+		final LocalDateTime createdAt = newItem.getCreatedAt();
 
 		assertNotNull("Created entity returns null ID", newItem.getId());
 		final Long newId = newItem.getId();
@@ -73,7 +73,7 @@ public class ItemJpaPersistenceTest {
 		Item itemUpdated = dao.read(newId);
 
 		assertEquals(itemInserted.getId(), newId);
-		assertEquals("Update fail", itemUpdated.getCreateAt(), createdAt);
+		assertEquals("Update fail", itemUpdated.getCreatedAt(), createdAt);
 		assertEquals("Update fail", itemUpdated.getDescription(), "Produto ABCDE");
 		assertEquals("Update fail", itemUpdated.getCostPrice(), new BigDecimal(43.9));
 		assertEquals("Update fail", itemUpdated.getSalePrice(), new BigDecimal(19.9));
