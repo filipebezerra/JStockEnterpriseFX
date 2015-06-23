@@ -11,7 +11,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="Cadastro">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#showGroupView" text="Grupos" />
+              <MenuItem mnemonicParsing="false" onAction="#showGroupItemView" text="Grupos" />
                   <MenuItem mnemonicParsing="false" onAction="#showDepartamentView" text="Setores" />
                   <MenuItem mnemonicParsing="false" onAction="#showSupplierView" text="Fornecedores" />
                   <MenuItem mnemonicParsing="false" onAction="#showItemView" text="Itens" />

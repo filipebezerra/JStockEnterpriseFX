@@ -1,169 +1,197 @@
 package jstockenterprisefx.supplier;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import jstockenterprisefx.base.model.Entity;
-import jstockenterprisefx.base.model.Uf;
+import java.io.Serializable;
 
-public class Supplier extends Entity {
-	private StringProperty nomeFantasia = new SimpleStringProperty(this,
-			"nomeFantasia", null);
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
-	private StringProperty razaoSocial = new SimpleStringProperty(this,
-			"razaoSocial", null);
+import jstockenterprisefx.base.entity.BaseEntity;
 
-	private StringProperty cnpj = new SimpleStringProperty(this, "cnpj", null);
+/**
+ *
+ * @author Filipe Bezerra
+ */
+@Entity
+@NamedQueries({
+    @NamedQuery(name = "Supplier.findAll", query = "SELECT s FROM Supplier s"),
+    @NamedQuery(name = "Supplier.findById", query = "SELECT s FROM Supplier s WHERE s.id = :id"),
+    @NamedQuery(name = "Supplier.findByCompanyName", query = "SELECT s FROM Supplier s WHERE s.companyName = :companyName")})
+public class Supplier extends BaseEntity<Integer> implements Serializable {
+    private static final long serialVersionUID = 1L;
+    
+    @Basic(optional = false)
+    @Column(nullable = false, length = 100)
+    private String companyName;
+    
+    @Basic(optional = false)
+    @Column(nullable = false, length = 120)
+    private String tradingName;
+    
+    @Basic(optional = false)
+    @Column(nullable = false, length = 14, unique = true)
+    private String cnpj;
+    
+    @Column(length = 11)
+    private String phoneNumber;
+    
+    @Column(length = 120, unique = true)
+    private String emailAddress;
+    
+    @Basic(optional = true)
+    @Column(nullable = true, length = 100)
+    private String publicArea;
+    
+    @Basic(optional = true)
+    @Column(nullable = true, length = 80)
+    private String district;
+    
+    @Basic(optional = true)
+    @Column(nullable = true, length = 80)
+    private String city;
+    
+    @Basic(optional = true)
+    @Column(nullable = true, length = 2)
+    private String uf;
+    
+    @Basic(optional = false)
+    @Column(nullable = false, length = 8)
+    private String cep;
 
-	private StringProperty telefone = new SimpleStringProperty(this,
-			"telefone", null);
+    public Supplier() {
+    }
 
-	private StringProperty email = new SimpleStringProperty(this, "email", null);
+    public Supplier(final Integer id) {
+        this.id = id;
+    }
+    
+    public Supplier(final String companyName, final String tradingName,
+    		final String cnpj, final String cep) {
+        this(null, companyName, tradingName, cnpj, null, null, null, null, cep);
+    }
+    
+    public Supplier(final String companyName, final String tradingName,
+    		final String cnpj, final String publicArea, final String district, final String city,
+    		final String uf, final String cep) {
+        this(null, companyName, tradingName, cnpj, publicArea, district, city, uf, cep);
+    }
 
+    public Supplier(final Integer id, final String companyName, final String tradingName,
+    		final String cnpj, final String publicArea, final String district, final String city,
+    		final String uf, final String cep) {
+        this.id = id;
+        this.companyName = companyName;
+        this.tradingName = tradingName;
+        this.cnpj = cnpj;
+        this.publicArea = publicArea;
+        this.district = district;
+        this.city = city;
+        this.uf = uf;
+        this.cep = cep;
+    }
 
-	private StringProperty logradouro = new SimpleStringProperty(this,
-			"logradouro", null);
+    public String getCompanyName() {
+        return companyName;
+    }
 
-	private StringProperty bairro = new SimpleStringProperty(this, "bairro",
-			null);
+    public void setCompanyName(final String companyName) {
+        this.companyName = companyName;
+    }
 
-	private StringProperty cidade = new SimpleStringProperty(this, "cidade",
-			null);
+    public String getTradingName() {
+        return tradingName;
+    }
 
-	private ObjectProperty<Uf> uf = new SimpleObjectProperty<>(this, "uf", null);
+    public void setTradingName(final String tradingName) {
+        this.tradingName = tradingName;
+    }
 
-	private StringProperty cep = new SimpleStringProperty(this, "cep", null);
+    public String getCnpj() {
+        return cnpj;
+    }
 
-	public Supplier(final String razaoSocial, final String cnpj,
-			final String telefone) {
-		this.razaoSocial.set(razaoSocial);
-		this.cnpj.set(cnpj);
-		this.telefone.set(telefone);
-	}
+    public void setCnpj(final String cnpj) {
+        this.cnpj = cnpj;
+    }
 
-	public String getNomeFantasia() {
-		return nomeFantasia.get();
-	}
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
-	public void setNomeFantasia(final String nomeFantasia) {
-		this.nomeFantasia.set(nomeFantasia);
-	}
+    public void setPhoneNumber(final String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
-	public StringProperty nomeFantasiaProperty() {
-		return nomeFantasia;
-	}
+    public String getEmailAddress() {
+        return emailAddress;
+    }
 
-	public String getRazaoSocial() {
-		return razaoSocial.get();
-	}
+    public void setEmailAddress(final String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
 
-	public void setRazaoSocial(final String razaoSocial) {
-		this.razaoSocial.set(razaoSocial);
-	}
+    public String getPublicArea() {
+        return publicArea;
+    }
 
-	public StringProperty razaoSocialProperty() {
-		return razaoSocial;
-	}
+    public void setPublicArea(final String publicArea) {
+        this.publicArea = publicArea;
+    }
 
-	public String getCnpj() {
-		return cnpj.get();
-	}
+    public String getDistrict() {
+        return district;
+    }
 
-	public void setCnpj(final String cnpj) {
-		this.cnpj.set(cnpj);
-	}
+    public void setDistrict(final String district) {
+        this.district = district;
+    }
 
-	public StringProperty cnpjProperty() {
-		return cnpj;
-	}
+    public String getCity() {
+        return city;
+    }
 
-	public String getTelefone() {
-		return telefone.get();
-	}
+    public void setCity(final String city) {
+        this.city = city;
+    }
 
-	public void setTelefone(final String telefone) {
-		this.telefone.set(telefone);
-	}
+    public String getUf() {
+        return uf;
+    }
 
-	public StringProperty telefoneProperty() {
-		return telefone;
-	}
+    public void setUf(final String uf) {
+        this.uf = uf;
+    }
 
-	public String getEmail() {
-		return email.get();
-	}
+    public String getCep() {
+        return cep;
+    }
 
-	public void setEmail(final String email) {
-		this.email.set(email);
-	}
+    public void setCep(final String cep) {
+        this.cep = cep;
+    }
 
-	public StringProperty emailProperty() {
-		return email;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
 
-	public String getLogradouro() {
-		return logradouro.get();
-	}
+    @Override
+    public boolean equals(final Object object) {
+        if (!(object instanceof Supplier))
+			return false;
+        Supplier other = (Supplier) object;
+        if ((id == null && other.id != null) || (id != null && !id.equals(other.id)))
+			return false;
+        return true;
+    }
 
-	public void setLogradouro(final String logradouro) {
-		this.logradouro.set(logradouro);
-	}
-
-	public StringProperty logradouroProperty() {
-		return logradouro;
-	}
-
-	public String getBairro() {
-		return bairro.get();
-	}
-
-	public void setBairro(final String bairro) {
-		this.bairro.set(bairro);
-	}
-
-	public StringProperty bairroProperty() {
-		return bairro;
-	}
-
-	public String getCidade() {
-		return cidade.get();
-	}
-
-	public void setCidade(final String cidade) {
-		this.cidade.set(cidade);
-	}
-
-	public StringProperty cidadeProperty() {
-		return cidade;
-	}
-
-	public Uf getUf() {
-		return uf.get();
-	}
-
-	public void setUf(final Uf uf) {
-		this.uf.set(uf);
-	}
-
-	public ObjectProperty<Uf> ufProperty() {
-		return uf;
-	}
-
-	public String getCep() {
-		return cep.get();
-	}
-
-	public void setCep(final String cep) {
-		this.cep.set(cep);
-	}
-
-	public StringProperty cepProperty() {
-		return cep;
-	}
-
-	@Override
-	public String toString() {
-		return getRazaoSocial();
-	}
+    @Override
+    public String toString() {
+        return companyName;
+    }
+    
 }

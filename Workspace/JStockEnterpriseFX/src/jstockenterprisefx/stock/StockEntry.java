@@ -7,11 +7,11 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
-import jstockenterprisefx.base.model.Entity;
-import jstockenterprisefx.supplier.Supplier;
+import jstockenterprisefx.base.tablemodel.BaseTableModel;
+import jstockenterprisefx.supplier.SupplierTableModel;
 
-public class StockEntry extends Entity {
-	private ObjectProperty<Supplier> supplier = new SimpleObjectProperty<Supplier>(
+public class StockEntry extends BaseTableModel {
+	private ObjectProperty<SupplierTableModel> supplier = new SimpleObjectProperty<SupplierTableModel>(
 			this, "supplier", null);
 
 	private ObjectProperty<LocalDate> registryDate = new SimpleObjectProperty<>(
@@ -20,15 +20,15 @@ public class StockEntry extends Entity {
 	private ListProperty<StockEntryItem> items = new SimpleListProperty<>(this,
 			"items", FXCollections.emptyObservableList());
 
-	public Supplier getSupplier() {
+	public SupplierTableModel getSupplier() {
 		return supplier.get();
 	}
 
-	public void setSupplier(final Supplier supplier) {
+	public void setSupplier(final SupplierTableModel supplier) {
 		this.supplier.set(supplier);
 	}
 
-	public ObjectProperty<Supplier> supplierProperty() {
+	public ObjectProperty<SupplierTableModel> supplierProperty() {
 		return supplier;
 	}
 

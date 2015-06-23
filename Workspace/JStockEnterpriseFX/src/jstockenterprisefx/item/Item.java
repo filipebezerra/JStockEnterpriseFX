@@ -1,136 +1,170 @@
 package jstockenterprisefx.item;
 
-import java.time.LocalDate;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.ReadOnlyIntegerWrapper;
-import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import jstockenterprisefx.base.model.Entity;
-import jstockenterprisefx.group.Group;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
-public class Item extends Entity {
-	private ObjectProperty<LocalDate> createdAt = new SimpleObjectProperty<>(
-			this, "createdAt", LocalDate.now());
+import jstockenterprisefx.base.entity.BaseEntity;
+import jstockenterprisefx.groupitem.GroupItem;
 
-	private StringProperty description = new SimpleStringProperty(this,
-			"description", null);
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
-	private ObjectProperty<Group> group = new SimpleObjectProperty<>(this,
-			"group", null);
+/**
+ *
+ * @author Filipe Bezerra
+ */
+@Entity
+@NamedQueries({
+		@NamedQuery(name = "Item.findAll", query = "SELECT i FROM Item i"),
+		@NamedQuery(name = "Item.findById", query = "SELECT i FROM Item i WHERE i.id = :id"),
+		@NamedQuery(name = "Item.findByCreateAt", query = "SELECT i FROM Item i WHERE i.createAt = :createAt"),
+		@NamedQuery(name = "Item.findByDescription", query = "SELECT i FROM Item i WHERE i.description = :description"),
+		@NamedQuery(name = "Item.findByStockQuantity", query = "SELECT i FROM Item i WHERE i.stockQuantity = :stockQuantity"),
+		@NamedQuery(name = "Item.findByLastStockUpdate", query = "SELECT i FROM Item i WHERE i.lastStockUpdate = :lastStockUpdate"),
+		@NamedQuery(name = "Item.findByGroupItemId", query = "SELECT i FROM Item i WHERE i.groupItem.id = :groupItemId") })
+public class Item extends BaseEntity<Long> implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-	private DoubleProperty costPrice = new SimpleDoubleProperty(this,
-			"costPrice", 0);
+	@Generated(GenerationTime.ALWAYS)
+	@Column(insertable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	private LocalDateTime createAt;
 
-	private DoubleProperty salePrice = new SimpleDoubleProperty(this,
-			"salePrice", 0);
+	@Basic(optional = false)
+	@Column(nullable = false, length = 120)
+	private String description;
 
-	private ReadOnlyIntegerWrapper stockQuantity = new ReadOnlyIntegerWrapper(
-			this, "stockQuantity", 0);
+	@Basic(optional = false)
+	@Column(nullable = false, precision = 12, scale = 2)
+	private BigDecimal costPrice;
 
-	private ReadOnlyObjectWrapper<LocalDate> lastStockUpdate = new ReadOnlyObjectWrapper<LocalDate>(
-			this, "lastStockUpdate", null);
+	@Basic(optional = false)
+	@Column(nullable = false, precision = 12, scale = 2)
+	private BigDecimal salePrice;
 
-	public Item(final String description, final Group group,
-			final Double salePrice, final Integer stockQuantity,
-			final LocalDate lastStockUpdate) {
-		this.description.set(description);
-		this.group.set(group);
-		this.salePrice.set(salePrice);
-		this.stockQuantity.set(stockQuantity);
-		this.lastStockUpdate.set(lastStockUpdate);
+	@Basic(optional = false)
+	@Column(nullable = false)
+	private int stockQuantity;
+
+	@Column(insertable = false)
+	private LocalDateTime lastStockUpdate;
+
+	@JoinColumn(name = "groupItemId", referencedColumnName = "id", nullable = false)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	private GroupItem groupItem;
+
+	public Item() {
 	}
 
-	public LocalDate getCreatedAt() {
-		return createdAt.get();
+	public Item(final Long id) {
+		this.id = id;
+	}
+	
+	public Item(final String description,
+			final BigDecimal costPrice, final BigDecimal salePrice,
+			final int stockQuantity, final GroupItem groupItem) {
+		this(null, null, description, costPrice, salePrice, stockQuantity, null, groupItem);
 	}
 
-	public void setCreatedAt(final LocalDate createdAt) {
-		this.createdAt.set(createdAt);
+	public Item(final Long id, final LocalDateTime createAt, final String description,
+			final BigDecimal costPrice, final BigDecimal salePrice,
+			final int stockQuantity, final LocalDateTime lastStockUpdate, final GroupItem groupItem) {
+		this.id = id;
+		this.createAt = createAt;
+		this.description = description;
+		this.costPrice = costPrice;
+		this.salePrice = salePrice;
+		this.stockQuantity = stockQuantity;
+		this.lastStockUpdate = lastStockUpdate;
+		this.groupItem = groupItem;
 	}
 
-	public ObjectProperty<LocalDate> createdAtProperty() {
-		return createdAt;
+	public LocalDateTime getCreateAt() {
+		return createAt;
+	}
+
+	public void setCreateAt(final LocalDateTime createAt) {
+		this.createAt = createAt;
 	}
 
 	public String getDescription() {
-		return description.get();
-	}
-
-	public void setDescription(final String description) {
-		this.description.set(description);
-	}
-
-	public StringProperty descriptionProperty() {
 		return description;
 	}
 
-	public Group getGroup() {
-		return group.get();
+	public void setDescription(final String description) {
+		this.description = description;
 	}
 
-	public void setGroup(final Group group) {
-		this.group.set(group);
-	}
-
-	public ObjectProperty<Group> groupProperty() {
-		return group;
-	}
-
-	public Double getCostPrice() {
-		return costPrice.get();
-	}
-
-	public void setCostPrice(final Double costPrice) {
-		this.costPrice.set(costPrice);
-	}
-
-	public DoubleProperty costPriceProperty() {
+	public BigDecimal getCostPrice() {
 		return costPrice;
 	}
 
-	public Double getSalePrice() {
-		return salePrice.get();
+	public void setCostPrice(final BigDecimal costPrice) {
+		this.costPrice = costPrice;
 	}
 
-	public void setSalePrice(final Double salePrice) {
-		this.salePrice.set(salePrice);
-	}
-
-	public DoubleProperty salePriceProperty() {
+	public BigDecimal getSalePrice() {
 		return salePrice;
 	}
 
-	public Integer getStockQuantity() {
-		return stockQuantity.get();
+	public void setSalePrice(final BigDecimal salePrice) {
+		this.salePrice = salePrice;
 	}
 
-	public void setStockQuantity(final Integer stockQuantity) {
-		this.stockQuantity.set(stockQuantity);
-	}
-
-	public ReadOnlyIntegerWrapper stockQuantityProperty() {
+	public int getStockQuantity() {
 		return stockQuantity;
 	}
 
-	public LocalDate getLastStockUpdate() {
-		return lastStockUpdate.get();
+	public void setStockQuantity(final int stockQuantity) {
+		this.stockQuantity = stockQuantity;
 	}
 
-	public void setLastStockUpdate(final LocalDate lastStockUpdate) {
-		this.lastStockUpdate.set(lastStockUpdate);
-	}
-
-	public ReadOnlyObjectWrapper<LocalDate> lastStockUpdateProperty() {
+	public LocalDateTime getLastStockUpdate() {
 		return lastStockUpdate;
+	}
+
+	public void setLastStockUpdate(final LocalDateTime lastStockUpdate) {
+		this.lastStockUpdate = lastStockUpdate;
+	}
+
+	public GroupItem getGroupItem() {
+		return groupItem;
+	}
+
+	public void setGroupItem(final GroupItem itemgroupid) {
+		groupItem = itemgroupid;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (id != null ? id.hashCode() : 0);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(final Object object) {
+		if (!(object instanceof Item))
+			return false;
+		Item other = (Item) object;
+		if ((id == null && other.id != null)
+				|| (id != null && !id.equals(other.id)))
+			return false;
+		return true;
 	}
 
 	@Override
 	public String toString() {
-		return getDescription();
+		return description;
 	}
+
 }

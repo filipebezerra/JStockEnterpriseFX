@@ -4,8 +4,8 @@
  <print-settings numCopies="1" zoom="1.0" pageNumbersPrinted="true" orientation="1" paperWidth="612.0" paperHeight="792.0" leftBorder="50.0" rightBorder="50.0" topBorder="50.0" bottomBorder="50.0" />
  <project-data-sources>
   <data-source id="DS0">
-   <property key="Logical" value="(Banco de dados alvo)" />
    <property key="Connection Type" value="H2 Database" />
+   <property key="Logical" value="Modelo de Dados" />
    <property key="JDBC URL" value="jdbc:h2:tcp://localhost/~/jstockenterprisefx" />
    <property key="UID" value="sa" />
    <property key="PWD" value="sa" />
@@ -65,7 +65,7 @@
     <column id="COL12" populated="true" UUID="130ee6aa-9594-4701-8f54-6f3b546b6c4f" autoIncrement="false" autoIncrementSequenceName="Item_LastStockUpdate_seq" defaultValue="" name="LastStockUpdate" nullable="0" physicalName="LastStockUpdate" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="93" userDefinedTypeUUID="6497d8de-0e00-40d6-a42e-e2adca83be64" >
      <remarks>Última atualização do estoque</remarks>
     </column>
-    <column id="COL13" populated="true" UUID="5bab3446-47e4-4fff-8c53-6d3f226dda8c" autoIncrement="false" autoIncrementSequenceName="Item_ItemGroupId_seq" defaultValue="" name="ItemGroupId" nullable="0" physicalName="ItemGroupId" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="5" userDefinedTypeUUID="69fb547f-e14c-4748-9746-4c0e9e94eb52" >
+    <column id="COL13" populated="true" UUID="5bab3446-47e4-4fff-8c53-6d3f226dda8c" autoIncrement="false" autoIncrementSequenceName="Item_GroupItemId_seq" defaultValue="" name="GroupItemId" nullable="0" physicalName="GroupItemId" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="5" userDefinedTypeUUID="69fb547f-e14c-4748-9746-4c0e9e94eb52" >
      <remarks></remarks>
     </column>
     </folder>
@@ -79,19 +79,19 @@
     </index>
    </folder>
   </table>
-  <table id="TAB16" populated="true" UUID="ffea18c8-9671-4fdf-ac74-9e279abc3218" name="ItemGroup" objectType="TABLE" physicalName="ItemGroup" >
+  <table id="TAB16" populated="true" UUID="ffea18c8-9671-4fdf-ac74-9e279abc3218" name="GroupItem" objectType="TABLE" physicalName="GroupItem" >
    <remarks></remarks>
    <folder id="FOLTAB161" populated="true" name="Columns" physicalName="Columns" type="1">
-    <column id="COL17" populated="true" UUID="8bc8ad7a-1378-4b24-825d-525825eb2c10" autoIncrement="true" autoIncrementSequenceName="ItemGroup_Id_seq" defaultValue="" name="Id" nullable="0" physicalName="Id" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="5" userDefinedTypeUUID="69fb547f-e14c-4748-9746-4c0e9e94eb52" >
+    <column id="COL17" populated="true" UUID="8bc8ad7a-1378-4b24-825d-525825eb2c10" autoIncrement="true" autoIncrementSequenceName="GroupItem_Id_seq" defaultValue="" name="Id" nullable="0" physicalName="Id" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="5" userDefinedTypeUUID="69fb547f-e14c-4748-9746-4c0e9e94eb52" >
      <remarks></remarks>
     </column>
-    <column id="COL18" populated="true" UUID="31e6cde3-4151-4486-82ae-985cd131d41b" autoIncrement="false" autoIncrementSequenceName="ItemGroup_GroupType_seq" defaultValue="" name="GroupType" nullable="0" physicalName="GroupType" precision="7" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="1" userDefinedTypeUUID="67ddc63f-5541-4dd1-9236-632d9d155e80" >
+    <column id="COL18" populated="true" UUID="31e6cde3-4151-4486-82ae-985cd131d41b" autoIncrement="false" autoIncrementSequenceName="GroupItem_GroupType_seq" defaultValue="" name="GroupType" nullable="0" physicalName="GroupType" precision="7" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="1" userDefinedTypeUUID="67ddc63f-5541-4dd1-9236-632d9d155e80" >
      <remarks>Tipo do grupo: Produto ou Serviço</remarks>
     </column>
-    <column id="COL19" populated="true" UUID="d36255e7-a5f3-4b8b-af09-fe0f8361a09e" autoIncrement="false" autoIncrementSequenceName="ItemGroup_Name_seq" defaultValue="" name="Name" nullable="0" physicalName="Name" precision="80" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL19" populated="true" UUID="d36255e7-a5f3-4b8b-af09-fe0f8361a09e" autoIncrement="false" autoIncrementSequenceName="GroupItem_Name_seq" defaultValue="" name="Name" nullable="0" physicalName="Name" precision="80" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks>Nome do grupo</remarks>
     </column>
-    <column id="COL20" populated="true" UUID="bd496625-a8a3-458d-903a-4b9d917734d4" autoIncrement="false" autoIncrementSequenceName="ItemGroup_Observation_seq" defaultValue="" name="Observation" nullable="1" physicalName="Observation" precision="300" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL20" populated="true" UUID="bd496625-a8a3-458d-903a-4b9d917734d4" autoIncrement="false" autoIncrementSequenceName="GroupItem_Observation_seq" defaultValue="" name="Observation" nullable="1" physicalName="Observation" precision="300" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks>Observação</remarks>
     </column>
     </folder>
@@ -100,7 +100,7 @@
     <folder id="FOLTAB162" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
     </folder>
     <folder id="FOLTAB164" populated="true" name="Indices" physicalName="Indices" type="4">
-    <index id="IDX21" populated="true" UUID="fddcbada-ff25-4988-a5ff-19b51c1d253b" clustered="false" name="ItemGroup_PK" physicalName="ItemGroup_PK" primaryKeyIndex="true" unique="false" >
+    <index id="IDX21" populated="true" UUID="fddcbada-ff25-4988-a5ff-19b51c1d253b" clustered="false" name="GroupItem_PK" physicalName="ItemGroup_PK" primaryKeyIndex="true" unique="false" >
      <index-column id="IDC22" populated="true" UUID="15c0b5c8-b0b1-4a3b-9419-6a7493003011" ascendingOrDescending="UNSPECIFIED" column-ref="COL17" name="Id" physicalName="Id" />
     </index>
    </folder>

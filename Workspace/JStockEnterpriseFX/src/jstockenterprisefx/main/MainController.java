@@ -9,13 +9,13 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import jstockenterprisefx.department.DepartmentController;
-import jstockenterprisefx.group.GroupController;
+import jstockenterprisefx.groupitem.GroupItemController;
 import jstockenterprisefx.item.ItemController;
 import jstockenterprisefx.stock.StockController;
 import jstockenterprisefx.supplier.SupplierController;
 
 public class MainController {
-	private static ObjectProperty<Parent> sGroupView = new SimpleObjectProperty<>(null);
+	private static ObjectProperty<Parent> sGroupItemView = new SimpleObjectProperty<>(null);
 	private static ObjectProperty<Parent> sDepartmentView = new SimpleObjectProperty<>(null);
 	private static ObjectProperty<Parent> sItemView = new SimpleObjectProperty<>(null);
 	private static ObjectProperty<Parent> sSupplierView = new SimpleObjectProperty<>(null);
@@ -50,9 +50,9 @@ public class MainController {
     }
 
     @FXML
-    private void showGroupView(final ActionEvent event) {
-    	initializeView(sGroupView, GroupController.class);
-    	showInCenter(sGroupView);
+    private void showGroupItemView(final ActionEvent event) {
+    	initializeView(sGroupItemView, GroupItemController.class);
+    	showInCenter(sGroupItemView);
     }
 
     @FXML

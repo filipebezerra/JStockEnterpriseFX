@@ -4,26 +4,26 @@ import java.time.LocalDate;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import jstockenterprisefx.group.GroupMockData;
+import jstockenterprisefx.groupitem.GroupItemMockData;
 
 public class ItemMockData {
-	private static ObservableList<Item> itemData = FXCollections
+	private static ObservableList<ItemTableModel> itemData = FXCollections
 			.observableArrayList();
 
 	static {
-		itemData.add(new Item("Item A", GroupMockData.getGroupData().get(0),
+		itemData.add(new ItemTableModel("Item A", GroupItemMockData.getGroupData().get(0),
 				12.5, 105, LocalDate.now()));
-		itemData.add(new Item("Item ABC", GroupMockData.getGroupData().get(2),
+		itemData.add(new ItemTableModel("Item ABC", GroupItemMockData.getGroupData().get(2),
 				125d, 22, LocalDate.now()));
-		itemData.add(new Item("Item CBA", GroupMockData.getGroupData().get(3),
+		itemData.add(new ItemTableModel("Item CBA", GroupItemMockData.getGroupData().get(3),
 				20.5, 2000, LocalDate.now()));
-		itemData.add(new Item("Item XYZ", GroupMockData.getGroupData().get(4),
+		itemData.add(new ItemTableModel("Item XYZ", GroupItemMockData.getGroupData().get(4),
 				1200d, 5, LocalDate.now()));
-		itemData.add(new Item("Item DIY", GroupMockData.getGroupData().get(5),
+		itemData.add(new ItemTableModel("Item DIY", GroupItemMockData.getGroupData().get(5),
 				10.5, 10, LocalDate.now()));
 	}
 
-	public static ObservableList<Item> getItemData() {
+	public static ObservableList<ItemTableModel> getItemData() {
 		return itemData;
 	}
 

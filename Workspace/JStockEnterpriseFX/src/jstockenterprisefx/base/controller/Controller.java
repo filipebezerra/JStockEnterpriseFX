@@ -11,10 +11,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
-import jstockenterprisefx.base.model.Entity;
-import jstockenterprisefx.base.model.NamedEntity;
+import jstockenterprisefx.base.tablemodel.BaseTableModel;
+import jstockenterprisefx.base.tablemodel.NamedTableModel;
 
-public class Controller<T extends Entity> {
+public class Controller<T extends BaseTableModel> {
 
 	protected static final Tooltip RESET_FIELDS_TOOLTIP = new Tooltip(
 			"Resete para o valor padrão de todos os campos editáveis no cadastro!");
@@ -101,7 +101,7 @@ public class Controller<T extends Entity> {
 			mIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 
 		if (mNameColumn != null)
-			mNameColumn.setCellValueFactory(cellData -> ((NamedEntity) cellData
+			mNameColumn.setCellValueFactory(cellData -> ((NamedTableModel) cellData
 					.getValue()).nameProperty());
 
 		if (mTabPane != null)
@@ -142,7 +142,7 @@ public class Controller<T extends Entity> {
 			mEditingModelObject.set(value);
 			mIdField.setText(String.valueOf(value.getId()));
 			if (mNameField != null)
-				mNameField.setText(((NamedEntity) value).getName());
+				mNameField.setText(((NamedTableModel) value).getName());
 			mTabPane.getSelectionModel().select(mRegisterTab);
 		}
 	}

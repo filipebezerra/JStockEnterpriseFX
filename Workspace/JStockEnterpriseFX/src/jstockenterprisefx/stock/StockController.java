@@ -17,10 +17,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import jstockenterprisefx.department.DepartamentMockData;
-import jstockenterprisefx.department.Department;
-import jstockenterprisefx.item.Item;
+import jstockenterprisefx.department.DepartmentTableModel;
+import jstockenterprisefx.item.ItemTableModel;
 import jstockenterprisefx.item.ItemMockData;
-import jstockenterprisefx.supplier.Supplier;
+import jstockenterprisefx.supplier.SupplierTableModel;
 import jstockenterprisefx.supplier.SupplierMockData;
 
 public class StockController {
@@ -31,10 +31,10 @@ public class StockController {
 	private Label mSupplierOrDepartmentLabel;
 
 	@FXML
-	private ComboBox<Supplier> mSupplierField;
+	private ComboBox<SupplierTableModel> mSupplierField;
 
 	@FXML
-	private ComboBox<Department> mDepartamentField;
+	private ComboBox<DepartmentTableModel> mDepartamentField;
 
 	@FXML
 	private DatePicker mRegistryDateField;
@@ -61,7 +61,7 @@ public class StockController {
 	private TableColumn<BaseStockItem, Integer> mEntryIdColumn;
 
 	@FXML
-	private TableColumn<BaseStockItem, Item> mItemColumn;
+	private TableColumn<BaseStockItem, ItemTableModel> mItemColumn;
 
 	@FXML
 	private TableColumn<BaseStockItem, Integer> mItemQuantityColumn;
@@ -72,7 +72,7 @@ public class StockController {
 	@FXML
 	private Button mFinishButton;
 
-	private ObjectProperty<Item> mSearchedItem = new SimpleObjectProperty<Item>(
+	private ObjectProperty<ItemTableModel> mSearchedItem = new SimpleObjectProperty<ItemTableModel>(
 			this, "mSearchedItem", null);
 
 	@FXML
@@ -102,7 +102,7 @@ public class StockController {
 				"quantity"));
 	}
 
-	private void handleSearchedItemChanged(final Item newValue) {
+	private void handleSearchedItemChanged(final ItemTableModel newValue) {
 		mAddItemButton.setDisable(mSearchedItem == null);
 	}
 
@@ -124,8 +124,8 @@ public class StockController {
 	@FXML
 	private void handleItemSearchById() {
 		if (mItemIdField.getText() != null) {
-			final ObservableList<Item> itemData = ItemMockData.getItemData();
-			FilteredList<Item> filtered = itemData
+			final ObservableList<ItemTableModel> itemData = ItemMockData.getItemData();
+			FilteredList<ItemTableModel> filtered = itemData
 					.filtered(p -> p.getId() == Integer.valueOf(mItemIdField
 							.getText()));
 
@@ -136,7 +136,7 @@ public class StockController {
 				alert.setHeaderText("Pesquisa por item pelo Id...");
 				alert.show();
 			} else {
-				mSearchedItem = new SimpleObjectProperty<Item>(filtered.get(0));
+				mSearchedItem = new SimpleObjectProperty<ItemTableModel>(filtered.get(0));
 				mItemDescriptionField.setText(mSearchedItem.get()
 						.getDescription());
 				mItemQuantityField.requestFocus();

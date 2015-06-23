@@ -2,10 +2,10 @@ package jstockenterprisefx.stock;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import jstockenterprisefx.item.Item;
+import jstockenterprisefx.item.ItemTableModel;
 
 public class StockEntryItem extends BaseStockItem {
-	public StockEntryItem(final Item item, final Integer quantity) {
+	public StockEntryItem(final ItemTableModel item, final Integer quantity) {
 		super(item, quantity);
 	}
 

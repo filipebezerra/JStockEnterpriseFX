@@ -10,19 +10,19 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import jstockenterprisefx.base.controller.Controller;
-import jstockenterprisefx.group.Group;
-import jstockenterprisefx.group.GroupMockData;
+import jstockenterprisefx.groupitem.GroupItemTableModel;
+import jstockenterprisefx.groupitem.GroupItemMockData;
 import jstockenterprisefx.util.DateUtil;
 
-public class ItemController extends Controller<Item> {
+public class ItemController extends Controller<ItemTableModel> {
 	@FXML
-	private TableColumn<Item, String> mDescriptionColumn;
+	private TableColumn<ItemTableModel, String> mDescriptionColumn;
 
 	@FXML
-	private TableColumn<Item, Integer> mStockQuantityColumn;
+	private TableColumn<ItemTableModel, Integer> mStockQuantityColumn;
 
 	@FXML
-	private TableColumn<Item, LocalDate> mLastStockUpdateColumn;
+	private TableColumn<ItemTableModel, LocalDate> mLastStockUpdateColumn;
 	
 	@FXML
 	private ComboBox<ItemSearchOption> mSearchOptionsField;
@@ -34,7 +34,7 @@ public class ItemController extends Controller<Item> {
 	private TextField mDescriptionField;
 
 	@FXML
-	private ComboBox<Group> mGroupField;
+	private ComboBox<GroupItemTableModel> mGroupField;
 
 	@FXML
 	private TextField mCostPriceField;
@@ -64,14 +64,14 @@ public class ItemController extends Controller<Item> {
 				.getValue().lastStockUpdateProperty());
 
 		mSearchOptionsField.getItems().addAll(ItemSearchOption.values());
-		mGroupField.getItems().addAll(GroupMockData.getGroupData());
+		mGroupField.getItems().addAll(GroupItemMockData.getGroupData());
 	}
 
 	@Override
 	protected void handleEditAction() {
 		super.handleEditAction();
 
-		final Item item = mEditingModelObject.get();
+		final ItemTableModel item = mEditingModelObject.get();
 		mCreatedAtField.setValue(item.getCreatedAt());
 		mDescriptionField.setText(item.getDescription());
 		mGroupField.getSelectionModel().select(item.getGroup());

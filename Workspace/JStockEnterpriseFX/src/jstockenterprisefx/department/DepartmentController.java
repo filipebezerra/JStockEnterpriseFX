@@ -5,9 +5,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import jstockenterprisefx.base.controller.Controller;
 
-public class DepartmentController extends Controller<Department> {
+public class DepartmentController extends Controller<DepartmentTableModel> {
 	@FXML
-	private TableColumn<Department, String> mResponsableColumn;
+	private TableColumn<DepartmentTableModel, String> mResponsableColumn;
 
 	@FXML
 	private TextField mResponsableField;
@@ -26,7 +26,7 @@ public class DepartmentController extends Controller<Department> {
 	protected void handleEditAction() {
 		super.handleEditAction();
 
-		final Department department = mEditingModelObject.get();
+		final DepartmentTableModel department = mEditingModelObject.get();
 		mNameField.setText(department.getName());
 		mResponsableField.setText(department.getResponsable());
 	}

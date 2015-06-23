@@ -4,30 +4,30 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import jstockenterprisefx.base.model.Entity;
-import jstockenterprisefx.item.Item;
+import jstockenterprisefx.base.tablemodel.BaseTableModel;
+import jstockenterprisefx.item.ItemTableModel;
 
-public class BaseStockItem extends Entity {
-	private ObjectProperty<Item> item = new SimpleObjectProperty<>(this,
+public class BaseStockItem extends BaseTableModel {
+	private ObjectProperty<ItemTableModel> item = new SimpleObjectProperty<>(this,
 			"item", null);
 
 	private IntegerProperty quantity = new SimpleIntegerProperty(this,
 			"quantity", 0);
 
-	public BaseStockItem(final Item item, final Integer quantity) {
+	public BaseStockItem(final ItemTableModel item, final Integer quantity) {
 		this.item.set(item);
 		this.quantity.set(quantity);
 	}
 
-	public Item getItem() {
+	public ItemTableModel getItem() {
 		return item.get();
 	}
 
-	public void setItem(final Item item) {
+	public void setItem(final ItemTableModel item) {
 		this.item.set(item);
 	}
 
-	public ObjectProperty<Item> itemProperty() {
+	public ObjectProperty<ItemTableModel> itemProperty() {
 		return item;
 	}
 

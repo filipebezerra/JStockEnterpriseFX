@@ -7,15 +7,15 @@ import javafx.scene.control.TextField;
 import jstockenterprisefx.base.controller.Controller;
 import jstockenterprisefx.base.model.Uf;
 
-public class SupplierController extends Controller<Supplier> {
+public class SupplierController extends Controller<SupplierTableModel> {
 	@FXML
-	private TableColumn<Supplier, String> mRazaoSocialColumn;
+	private TableColumn<SupplierTableModel, String> mRazaoSocialColumn;
 
 	@FXML
-	private TableColumn<Supplier, String> mCnpjColumn;
+	private TableColumn<SupplierTableModel, String> mCnpjColumn;
 
 	@FXML
-	private TableColumn<Supplier, String> mTelefoneColumn;
+	private TableColumn<SupplierTableModel, String> mTelefoneColumn;
 	
 	@FXML
 	private TextField mNomeFantasiaField;
@@ -67,7 +67,7 @@ public class SupplierController extends Controller<Supplier> {
 	protected void handleEditAction() {
 		super.handleEditAction();
 
-		final Supplier supplier = mEditingModelObject.get();
+		final SupplierTableModel supplier = mEditingModelObject.get();
 		mNomeFantasiaField.setText(supplier.getNomeFantasia());
 		mRazaoSocialField.setText(supplier.getRazaoSocial());
 		mCnpjField.setText(supplier.getCnpj());
