@@ -1,36 +1,23 @@
 package jstockenterprisefx.groupitem;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import jstockenterprisefx.base.jpa.BaseJpaPersistenceTest;
 import jstockenterprisefx.base.jpa.JpaEntityManager;
-import jstockenterprisefx.groupitem.GroupItem;
-import jstockenterprisefx.groupitem.GroupItemDao;
-import jstockenterprisefx.groupitem.GroupType;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class GroupItemJpaPersistenceTest {
-	private static JpaEntityManager jpa = new JpaEntityManager();
-	private static GroupItemDao dao;
+public class GroupItemJpaPersistenceTest extends BaseJpaPersistenceTest<GroupItem, Short> {
 
-	@BeforeClass
-	public static void beforeClass() {
-		dao = new GroupItemDao(jpa.getEntityManager());
+	public GroupItemJpaPersistenceTest() {
+		dao = new GroupItemDao(JpaEntityManager.getEntityManager());
 	}
-	
+
 	@Test
 	public void testGroupItemCrud() {
 		GroupItem newGroup = new GroupItem(GroupType.SERVICE,
 				"Implantação de Software");
 
-		jpa.beginTransaction();
-		dao.create(newGroup);
-		jpa.commit();
-
-		assertNotNull("Created entity returns null ID", newGroup.getId());
-		final Short newId = newGroup.getId();
+		final Short newId = testCreate(newGroup);
 
 		GroupItem groupInserted = dao.read(newId);
 
@@ -43,9 +30,9 @@ public class GroupItemJpaPersistenceTest {
 		groupInserted.setName("Resistores");
 		groupInserted.setGroupType(GroupType.PRODUCT);
 
-		jpa.beginTransaction();
+		JpaEntityManager.beginTransaction();
 		dao.update(groupInserted);
-		jpa.commit();
+		JpaEntityManager.commit();
 
 		GroupItem groupUpdated = dao.read(newId);
 
@@ -54,11 +41,8 @@ public class GroupItemJpaPersistenceTest {
 		assertEquals("Update fail", groupInserted.getGroupType(),
 				GroupType.PRODUCT);
 
-		jpa.beginTransaction();
-		dao.delete(groupUpdated);
-		jpa.commit();
+		testList(1);
 
-		GroupItem groupDeleted = dao.read(newId);
-		assertNull("Delete fail", groupDeleted);
+		testDelete(groupUpdated);
 	}
 }

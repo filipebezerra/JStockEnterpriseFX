@@ -26,12 +26,11 @@ public abstract class JpaGenericDao<T extends BaseEntity<ID>, ID extends Seriali
 		mEntityManager.persist(entity);
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<T> read() {
-		return mEntityManager
-				.createQuery(
-						String.format("SELECT e FROM %s",
-								mEntityClass.getSimpleName())).getResultList();
+		final String query = new StringBuffer("SELECT e FROM ")
+				.append(mEntityClass.getSimpleName()).append(" e").toString();
+
+		return read(query);
 	}
 
 	public T read(final ID id) {
