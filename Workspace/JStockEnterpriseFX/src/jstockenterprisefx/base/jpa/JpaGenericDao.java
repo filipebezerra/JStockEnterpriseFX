@@ -11,15 +11,23 @@ import javax.persistence.Query;
 import jstockenterprisefx.base.entity.BaseEntity;
 
 public abstract class JpaGenericDao<T extends BaseEntity<ID>, ID extends Serializable> {
-	protected EntityManager mEntityManager;
+	private EntityManager mEntityManager;
 
-	protected final Class<T> mEntityClass;
+	private final Class<T> mEntityClass;
 
 	@SuppressWarnings("unchecked")
 	public JpaGenericDao(final EntityManager entityManager) {
 		mEntityManager = entityManager;
 		mEntityClass = (Class<T>) ((ParameterizedType) getClass()
 				.getGenericSuperclass()).getActualTypeArguments()[0];
+	}
+
+	public EntityManager getEntityManager() {
+		return mEntityManager;
+	}
+
+	public Class<T> getEntityClass() {
+		return mEntityClass;
 	}
 
 	public void create(final T entity) {
@@ -68,8 +76,8 @@ public abstract class JpaGenericDao<T extends BaseEntity<ID>, ID extends Seriali
 		mEntityManager.merge(entity);
 	}
 
-	public void delete(final T entity) {
-		mEntityManager.getReference(mEntityClass, entity.getId());
+	public void delete(T entity) {
+		entity = mEntityManager.getReference(mEntityClass, entity.getId());
 		mEntityManager.remove(entity);
 	}
 }

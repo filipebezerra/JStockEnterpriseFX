@@ -6,43 +6,40 @@ import jstockenterprisefx.base.jpa.JpaEntityManager;
 
 import org.junit.Test;
 
-public class GroupItemJpaPersistenceTest extends BaseJpaPersistenceTest<GroupItem, Short> {
+public class GroupItemJpaPersistenceTest extends
+		BaseJpaPersistenceTest<GroupItem, Short> {
 
 	public GroupItemJpaPersistenceTest() {
-		dao = new GroupItemDao(JpaEntityManager.getEntityManager());
+		dao.set(new GroupItemDao(JpaEntityManager.getEntityManager()));
 	}
 
 	@Test
 	public void testGroupItemCrud() {
 		GroupItem newGroup = new GroupItem(GroupType.SERVICE,
+				"Implantação de Software",
+				"O processo implantação é previsto para 12 meses");
+
+		GroupItem insertedGroup = testCreate(newGroup);
+
+		assertEquals("Insert fail", insertedGroup.getName(),
 				"Implantação de Software");
-
-		final Short newId = testCreate(newGroup);
-
-		GroupItem groupInserted = dao.read(newId);
-
-		assertEquals(groupInserted.getId(), newId);
-		assertEquals("Insert fail", groupInserted.getName(),
-				"Implantação de Software");
-		assertEquals("Insert fail", groupInserted.getGroupType(),
+		assertEquals("Insert fail", insertedGroup.getGroupType(),
 				GroupType.SERVICE);
+		assertEquals("Insert fail",
+				"O processo implantação é previsto para 12 meses",
+				insertedGroup.getObservation());
 
-		groupInserted.setName("Resistores");
-		groupInserted.setGroupType(GroupType.PRODUCT);
+		insertedGroup.setName("Resistores");
+		insertedGroup.setGroupType(GroupType.PRODUCT);
 
-		JpaEntityManager.beginTransaction();
-		dao.update(groupInserted);
-		JpaEntityManager.commit();
+		GroupItem updatedGroup = testUpdate(insertedGroup);
 
-		GroupItem groupUpdated = dao.read(newId);
-
-		assertEquals(groupUpdated.getId(), newId);
-		assertEquals("Update fail", groupInserted.getName(), "Resistores");
-		assertEquals("Update fail", groupInserted.getGroupType(),
+		assertEquals("Update fail", insertedGroup.getName(), "Resistores");
+		assertEquals("Update fail", insertedGroup.getGroupType(),
 				GroupType.PRODUCT);
 
 		testList(1);
 
-		testDelete(groupUpdated);
+		testDelete(updatedGroup);
 	}
 }

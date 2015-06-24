@@ -2,89 +2,110 @@ package jstockenterprisefx.item;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import javax.persistence.Query;
+
+import jstockenterprisefx.base.jpa.BaseJpaPersistenceTest;
 import jstockenterprisefx.base.jpa.JpaEntityManager;
 import jstockenterprisefx.groupitem.GroupItem;
 import jstockenterprisefx.groupitem.GroupItemDao;
 import jstockenterprisefx.groupitem.GroupType;
 
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
-public class ItemJpaPersistenceTest {
-	private static JpaEntityManager jpa = new JpaEntityManager();
-	private static ItemDao dao;
-	private static GroupItemDao groupDao;
+public class ItemJpaPersistenceTest extends BaseJpaPersistenceTest<Item, Long> {
+	private GroupItemDao groupDao;
 
-	@BeforeClass
-	public static void beforeClass() {
-		dao = new ItemDao(jpa.getEntityManager());
-		groupDao = new GroupItemDao(jpa.getEntityManager());
+	public ItemJpaPersistenceTest() {
+		dao.set(new ItemDao(JpaEntityManager.getEntityManager()));
+		groupDao = new GroupItemDao(JpaEntityManager.getEntityManager());
 	}
-	
+
+	@Override
+	@Before
+	public void before() {
+		super.before();
+		deleteAllGroupItem();
+	}
+
+	@Override
+	@After
+	public void after() {
+		super.before();
+		deleteAllGroupItem();
+	}
+
+	private GroupItem createGroupItem(final GroupItem newGroupItem) {
+		JpaEntityManager.beginTransaction();
+		groupDao.create(newGroupItem);
+		JpaEntityManager.commit();
+		return newGroupItem;
+	}
+
+	private void deleteAllGroupItem() {
+		Class<GroupItem> groupItemClass = groupDao.getEntityClass();
+
+		JpaEntityManager.beginTransaction();
+		Query query = dao.get().getEntityManager()
+				.createQuery("delete from " + groupItemClass.getSimpleName());
+		query.executeUpdate();
+		JpaEntityManager.commit();
+	}
+
 	@Test
 	public void testItemCrud() {
-		final GroupItem newGroupItem = new GroupItem(GroupType.PRODUCT, "Transistores");
-		jpa.beginTransaction();
-		groupDao.create(newGroupItem);
-		jpa.commit();
-		
-		Item newItem = new Item("Produto A", new BigDecimal(14.87),
-				new BigDecimal(19), 100, newGroupItem);
+		final GroupItem newGroupItem = new GroupItem(GroupType.PRODUCT,
+				"Transistores");
+		GroupItem insertedGroupItem = createGroupItem(newGroupItem);
 
-		jpa.beginTransaction();
-		dao.create(newItem);
-		jpa.commit();
-		
-		final LocalDateTime createdAt = newItem.getCreatedAt();
+		final Item newItem = new Item("Produto A", new BigDecimal(14.87),
+				new BigDecimal(19), 100, insertedGroupItem);
 
-		assertNotNull("Created entity returns null ID", newItem.getId());
-		final Long newId = newItem.getId();
+		Item insertedItem = testCreate(newItem);
 
-		Item itemInserted = dao.read(newId);
+		final LocalDateTime insertedItemCreatedAt = insertedItem.getCreatedAt();
 
-		assertEquals(itemInserted.getId(), newId);
-		assertNotNull("Insert fail", createdAt);
-		assertEquals("Insert fail", itemInserted.getDescription(), "Produto A");
-		assertEquals("Insert fail", itemInserted.getCostPrice(), new BigDecimal(14.87));
-		assertEquals("Insert fail", itemInserted.getSalePrice(), new BigDecimal(19));
-		assertEquals("Insert fail", itemInserted.getStockQuantity(), 100);
-		assertEquals("Insert fail", itemInserted.getGroupItem(), newGroupItem);
+		assertNotNull("Insert fail", insertedItemCreatedAt);
+		assertEquals("Insert fail", insertedItem.getName(), "Produto A");
+		assertEquals("Insert fail", insertedItem.getCostPrice(),
+				new BigDecimal(14.87));
+		assertEquals("Insert fail", insertedItem.getSalePrice(),
+				new BigDecimal(19));
+		assertEquals("Insert fail", insertedItem.getStockQuantity(), 100);
+		assertEquals("Insert fail", insertedItem.getGroupItem(),
+				insertedGroupItem);
 
-		final GroupItem updateGroupItem = new GroupItem(GroupType.SERVICE, "Atualização de Software");
-		jpa.beginTransaction();
-		groupDao.create(updateGroupItem);
-		jpa.commit();
-		
-		itemInserted.setDescription("Produto ABCDE");
-		itemInserted.setCostPrice(new BigDecimal(43.9));
-		itemInserted.setSalePrice(new BigDecimal(19.9));
-		itemInserted.setStockQuantity(60);
-		itemInserted.setGroupItem(updateGroupItem);
+		final GroupItem newGroupItemForUpdate = new GroupItem(
+				GroupType.SERVICE, "Atualização de Software");
+		GroupItem insertedGroupItemForUpdate = createGroupItem(newGroupItemForUpdate);
 
-		jpa.beginTransaction();
-		dao.update(itemInserted);
-		jpa.commit();
+		insertedItem.setName("Produto ABCDE");
+		insertedItem.setCostPrice(new BigDecimal(43.9));
+		insertedItem.setSalePrice(new BigDecimal(19.9));
+		insertedItem.setStockQuantity(60);
+		insertedItem.setGroupItem(insertedGroupItemForUpdate);
 
-		Item itemUpdated = dao.read(newId);
+		Item updatedItem = testUpdate(insertedItem);
 
-		assertEquals(itemInserted.getId(), newId);
-		assertEquals("Update fail", itemUpdated.getCreatedAt(), createdAt);
-		assertEquals("Update fail", itemUpdated.getDescription(), "Produto ABCDE");
-		assertEquals("Update fail", itemUpdated.getCostPrice(), new BigDecimal(43.9));
-		assertEquals("Update fail", itemUpdated.getSalePrice(), new BigDecimal(19.9));
-		assertEquals("Update fail", itemUpdated.getStockQuantity(), 60);
-		assertEquals("Insert fail", itemInserted.getGroupItem(), updateGroupItem);
+		assertEquals("Update fail", updatedItem.getCreatedAt(),
+				insertedItemCreatedAt);
+		assertEquals("Update fail", updatedItem.getName(), "Produto ABCDE");
+		assertEquals("Update fail", updatedItem.getCostPrice(), new BigDecimal(
+				43.9));
+		assertEquals("Update fail", updatedItem.getSalePrice(), new BigDecimal(
+				19.9));
+		assertEquals("Update fail", updatedItem.getStockQuantity(), 60);
+		assertEquals("Insert fail", insertedItem.getGroupItem(),
+				insertedGroupItemForUpdate);
 
-		jpa.beginTransaction();
-		dao.delete(itemUpdated);
-		jpa.commit();
+		testList(1);
 
-		Item ItemDeleted = dao.read(newId);
-		assertNull("Delete fail", ItemDeleted);
+		testDelete(updatedItem);
 	}
+
 }

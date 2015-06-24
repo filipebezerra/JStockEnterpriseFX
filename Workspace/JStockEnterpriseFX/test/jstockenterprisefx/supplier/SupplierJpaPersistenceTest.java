@@ -1,20 +1,16 @@
 package jstockenterprisefx.supplier;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import jstockenterprisefx.base.jpa.BaseJpaPersistenceTest;
 import jstockenterprisefx.base.jpa.JpaEntityManager;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class SupplierJpaPersistenceTest {
-	private static JpaEntityManager jpa = new JpaEntityManager();
-	private static SupplierDao dao;
+public class SupplierJpaPersistenceTest extends
+		BaseJpaPersistenceTest<Supplier, Integer> {
 
-	@BeforeClass
-	public static void beforeClass() {
-		dao = new SupplierDao(jpa.getEntityManager());
+	public SupplierJpaPersistenceTest() {
+		dao.set(new SupplierDao(JpaEntityManager.getEntityManager()));
 	}
 
 	@Test
@@ -22,49 +18,33 @@ public class SupplierJpaPersistenceTest {
 		Supplier newSupplier = new Supplier("The Creative Shop",
 				"The Creative Shop S.A.", "14877648000155", "21393054");
 
-		jpa.beginTransaction();
-		dao.create(newSupplier);
-		jpa.commit();
+		Supplier insertedSupplier = testCreate(newSupplier);
 
-		assertNotNull("Created entity returns null ID", newSupplier.getId());
-		final Integer newId = newSupplier.getId();
-
-		Supplier supplierInserted = dao.read(newId);
-
-		assertEquals(supplierInserted.getId(), newId);
-		assertEquals("Insert fail", supplierInserted.getCompanyName(),
+		assertEquals("Insert fail", insertedSupplier.getCompanyName(),
 				"The Creative Shop");
-		assertEquals("Insert fail", supplierInserted.getTradingName(),
+		assertEquals("Insert fail", insertedSupplier.getTradingName(),
 				"The Creative Shop S.A.");
-		assertEquals("Insert fail", supplierInserted.getCnpj(),
+		assertEquals("Insert fail", insertedSupplier.getCnpj(),
 				"14877648000155");
-		assertEquals("Insert fail", supplierInserted.getCep(), "21393054");
+		assertEquals("Insert fail", insertedSupplier.getCep(), "21393054");
 
-		supplierInserted.setCompanyName("APN Publicidade");
-		supplierInserted.setTradingName("APN Publicidade Lda");
-		supplierInserted.setCnpj("25183681000100");
-		supplierInserted.setCep("12148608");
+		insertedSupplier.setCompanyName("APN Publicidade");
+		insertedSupplier.setTradingName("APN Publicidade Lda");
+		insertedSupplier.setCnpj("25183681000100");
+		insertedSupplier.setCep("12148608");
 
-		jpa.beginTransaction();
-		dao.update(supplierInserted);
-		jpa.commit();
+		Supplier updatedSupplier = testUpdate(insertedSupplier);
 
-		Supplier supplierUpdated = dao.read(newId);
-
-		assertEquals(supplierInserted.getId(), newId);
-		assertEquals("Update fail", supplierInserted.getCompanyName(),
+		assertEquals("Update fail", insertedSupplier.getCompanyName(),
 				"APN Publicidade");
-		assertEquals("Update fail", supplierInserted.getTradingName(),
+		assertEquals("Update fail", insertedSupplier.getTradingName(),
 				"APN Publicidade Lda");
-		assertEquals("Update fail", supplierInserted.getCnpj(),
+		assertEquals("Update fail", insertedSupplier.getCnpj(),
 				"25183681000100");
-		assertEquals("Update fail", supplierInserted.getCep(), "12148608");
+		assertEquals("Update fail", insertedSupplier.getCep(), "12148608");
 
-		jpa.beginTransaction();
-		dao.delete(supplierUpdated);
-		jpa.commit();
+		testList(1);
 
-		Supplier supplierDeleted = dao.read(newId);
-		assertNull("Delete fail", supplierDeleted);
+		testDelete(updatedSupplier);
 	}
 }
