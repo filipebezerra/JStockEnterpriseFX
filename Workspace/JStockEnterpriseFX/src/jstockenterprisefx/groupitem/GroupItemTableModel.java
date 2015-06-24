@@ -6,21 +6,19 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import jstockenterprisefx.base.tablemodel.NamedTableModel;
 
-public class GroupItemTableModel extends NamedTableModel<Short> {
-	private ObjectProperty<GroupType> groupType = new SimpleObjectProperty<GroupType>(
+public class GroupItemTableModel extends NamedTableModel<GroupItem, Short> {
+
+	private final ObjectProperty<GroupType> groupType = new SimpleObjectProperty<GroupType>(
 			this, "groupType", null);
-	private StringProperty observation = new SimpleStringProperty(this,
-			"observation", null);;
 
-	public GroupItemTableModel() {
-		this(null, null, null);
-	}
+	private final StringProperty observation = new SimpleStringProperty(this,
+			"observation", null);
 
-	public GroupItemTableModel(final String name, final GroupType groupType,
-			final String observation) {
-		this.name.set(name);
-		this.groupType.set(groupType);
-		this.observation.set(observation);
+	public GroupItemTableModel(final GroupItem groupItem) {
+		super(groupItem);
+
+		setGroupType(groupItem.getGroupType());
+		setObservation(groupItem.getObservation());
 	}
 
 	public GroupType getGroupType() {
@@ -51,4 +49,5 @@ public class GroupItemTableModel extends NamedTableModel<Short> {
 	public String toString() {
 		return getName();
 	}
+
 }
