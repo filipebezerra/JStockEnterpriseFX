@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
-import jstockenterprisefx.base.entity.BaseEntity;
+import jstockenterprisefx.base.entity.NamedEntity;
 import jstockenterprisefx.groupitem.GroupItem;
 
 import org.hibernate.annotations.Generated;
@@ -28,20 +28,16 @@ import org.hibernate.annotations.GenerationTime;
 		@NamedQuery(name = "Item.findAll", query = "SELECT i FROM Item i"),
 		@NamedQuery(name = "Item.findById", query = "SELECT i FROM Item i WHERE i.id = :id"),
 		@NamedQuery(name = "Item.findByCreatedAt", query = "SELECT i FROM Item i WHERE i.createdAt = :createdAt"),
-		@NamedQuery(name = "Item.findByDescription", query = "SELECT i FROM Item i WHERE i.description = :description"),
+		@NamedQuery(name = "Item.findByName", query = "SELECT i FROM Item i WHERE i.name = :name"),
 		@NamedQuery(name = "Item.findByStockQuantity", query = "SELECT i FROM Item i WHERE i.stockQuantity = :stockQuantity"),
 		@NamedQuery(name = "Item.findByLastStockUpdate", query = "SELECT i FROM Item i WHERE i.lastStockUpdate = :lastStockUpdate"),
 		@NamedQuery(name = "Item.findByGroupItemId", query = "SELECT i FROM Item i WHERE i.groupItem.id = :groupItemId") })
-public class Item extends BaseEntity<Long> implements Serializable {
+public class Item extends NamedEntity<Long> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Generated(GenerationTime.ALWAYS)
 	@Column(insertable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private LocalDateTime createdAt;
-
-	@Basic(optional = false)
-	@Column(nullable = false, length = 120)
-	private String description;
 
 	@Basic(optional = false)
 	@Column(nullable = false, precision = 12, scale = 2)
@@ -68,19 +64,21 @@ public class Item extends BaseEntity<Long> implements Serializable {
 	public Item(final Long id) {
 		this.id = id;
 	}
-	
-	public Item(final String description,
-			final BigDecimal costPrice, final BigDecimal salePrice,
-			final int stockQuantity, final GroupItem groupItem) {
-		this(null, null, description, costPrice, salePrice, stockQuantity, null, groupItem);
+
+	public Item(final String name, final BigDecimal costPrice,
+			final BigDecimal salePrice, final int stockQuantity,
+			final GroupItem groupItem) {
+		this(null, null, name, costPrice, salePrice, stockQuantity, null,
+				groupItem);
 	}
 
-	public Item(final Long id, final LocalDateTime createdAt, final String description,
-			final BigDecimal costPrice, final BigDecimal salePrice,
-			final int stockQuantity, final LocalDateTime lastStockUpdate, final GroupItem groupItem) {
+	public Item(final Long id, final LocalDateTime createdAt,
+			final String name, final BigDecimal costPrice,
+			final BigDecimal salePrice, final int stockQuantity,
+			final LocalDateTime lastStockUpdate, final GroupItem groupItem) {
 		this.id = id;
 		this.createdAt = createdAt;
-		this.description = description;
+		this.name = name;
 		this.costPrice = costPrice;
 		this.salePrice = salePrice;
 		this.stockQuantity = stockQuantity;
@@ -94,14 +92,6 @@ public class Item extends BaseEntity<Long> implements Serializable {
 
 	public void setCreatedAt(final LocalDateTime createdAt) {
 		this.createdAt = createdAt;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(final String description) {
-		this.description = description;
 	}
 
 	public BigDecimal getCostPrice() {
@@ -164,7 +154,7 @@ public class Item extends BaseEntity<Long> implements Serializable {
 
 	@Override
 	public String toString() {
-		return description;
+		return name;
 	}
 
 }

@@ -7,6 +7,7 @@ import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public abstract class BaseEntity<ID> {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	protected ID id;
@@ -18,4 +19,5 @@ public abstract class BaseEntity<ID> {
 	public void setId(final ID id) {
 		this.id = id;
 	}
+
 }
