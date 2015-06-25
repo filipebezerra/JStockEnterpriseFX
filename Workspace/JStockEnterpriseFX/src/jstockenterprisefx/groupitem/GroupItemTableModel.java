@@ -27,7 +27,7 @@ public class GroupItemTableModel extends NamedTableModel<GroupItem, Short> {
 
 	public GroupItemTableModel(final String name, final GroupType groupType,
 			final String observation) {
-		setName(name);
+		super(name);
 		setGroupType(groupType);
 		setObservation(observation);
 	}
@@ -59,11 +59,6 @@ public class GroupItemTableModel extends NamedTableModel<GroupItem, Short> {
 	@Override
 	public String toString() {
 		return getName();
-	}
-
-	@Override
-	public boolean filter(final String filterText) {
-		return getName().toUpperCase().contains(filterText.toUpperCase());
 	}
 
 }

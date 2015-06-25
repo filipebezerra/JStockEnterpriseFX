@@ -87,6 +87,8 @@ public abstract class BaseTableModel<T extends BaseEntity<ID>, ID extends Serial
 				.toString();
 	}
 
-	public abstract boolean filter(final String filterText);
+	public boolean filter(final Serializable filterText) {
+		return getId().equals(filterText);
+	}
 
 }

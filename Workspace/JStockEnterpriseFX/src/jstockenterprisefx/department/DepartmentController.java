@@ -1,40 +1,86 @@
 package jstockenterprisefx.department;
 
+import java.util.List;
+
 import javafx.fxml.FXML;
+import javafx.scene.control.Control;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
-import jstockenterprisefx.base.controller.Controller;
+import jstockenterprisefx.base.controller.NamedController;
+import jstockenterprisefx.base.jpa.JpaEntityManager;
+import jstockenterprisefx.base.jpa.JpaGenericDao;
 
-public class DepartmentController extends Controller<DepartmentTableModel> {
+public class DepartmentController extends
+		NamedController<DepartmentTableModel, Department, Short> {
+
 	@FXML
-	private TableColumn<DepartmentTableModel, String> mResponsableColumn;
+	private TableColumn<DepartmentTableModel, String> mPersonResponsibleColumn;
 
 	@FXML
-	private TextField mResponsableField;
+	private TextField mPersonResponsibleField;
 
 	@Override
-	protected void initialize() {
-		mDataTable.getItems().addAll(DepartamentMockData.getDepartamentData());
-
-		super.initialize();
-
-		mResponsableColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.responsableProperty());
+	protected JpaGenericDao<Department, Short> initializeDao() {
+		return new DepartmentDao(JpaEntityManager.getEntityManager());
 	}
 
 	@Override
-	protected void handleEditAction() {
-		super.handleEditAction();
-
-		final DepartmentTableModel department = mEditingModelObject.get();
-		mNameField.setText(department.getName());
-		mResponsableField.setText(department.getResponsable());
+	protected DepartmentTableModel newTableModel() {
+		return new DepartmentTableModel();
 	}
 
 	@Override
-	protected void handleResetFieldsAction() {
-		super.handleResetFieldsAction();
-		mNameField.setText(null);
-		mResponsableField.setText(null);
+	protected DepartmentTableModel newTableModel(final Department department) {
+		return new DepartmentTableModel(department);
 	}
+
+	@Override
+	protected String getEntityNameToDialogMessages() {
+		return "departamento";
+	}
+
+	@Override
+	protected void fillEntityFromFields(final Department department) {
+		super.fillEntityFromFields(department);
+
+		department.setPersonResponsible(mPersonResponsibleField.getText());
+	}
+
+	@Override
+	protected void loadRelatedData() {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	protected void bindTableColums() {
+		super.bindTableColums();
+
+		mPersonResponsibleColumn.setCellValueFactory(cellData -> cellData
+				.getValue().personResponsibleProperty());
+	}
+
+	@Override
+	protected void resetFieldsToEmpty() {
+		super.resetFieldsToEmpty();
+
+		mPersonResponsibleField.setText(null);
+	}
+
+	@Override
+	protected void fillFieldsFromEntity(final DepartmentTableModel tableModel) {
+		super.fillFieldsFromEntity(tableModel);
+
+		mPersonResponsibleField.setText(tableModel.getEntity()
+				.getPersonResponsible());
+	}
+
+	@Override
+	protected List<Control> getRequiredFieldList() {
+		List<Control> controlsList = super.getRequiredFieldList();
+
+		controlsList.add(mPersonResponsibleField);
+
+		return controlsList;
+	}
+
 }

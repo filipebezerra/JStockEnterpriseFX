@@ -10,13 +10,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import jstockenterprisefx.base.entity.NamedEntity;
 import jstockenterprisefx.base.tablemodel.NamedTableModel;
-import jstockenterprisefx.groupitem.GroupItemTableModel;
 
 public abstract class NamedController<TM extends NamedTableModel<? extends NamedEntity<ID>, ? extends Serializable>, T extends NamedEntity<ID>, ID extends Serializable>
 		extends BaseController<TM, T, ID> {
 
 	@FXML
-	protected TableColumn<GroupItemTableModel, String> mNameColumn;
+	protected TableColumn<TM, String> mNameColumn;
 
 	@FXML
 	protected TextField mNameField;
@@ -54,6 +53,11 @@ public abstract class NamedController<TM extends NamedTableModel<? extends Named
 		controlsList.add(mNameField);
 
 		return controlsList;
+	}
+
+	@Override
+	protected Control getDefaultFocusField() {
+		return mNameField;
 	}
 
 }

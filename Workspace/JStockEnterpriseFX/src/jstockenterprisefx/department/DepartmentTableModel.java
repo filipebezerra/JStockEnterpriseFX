@@ -4,33 +4,43 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import jstockenterprisefx.base.tablemodel.NamedTableModel;
 
-public class DepartmentTableModel extends NamedTableModel {
-	private StringProperty responsable = new SimpleStringProperty(this,
-			"responsable", null);
+public class DepartmentTableModel extends NamedTableModel<Department, Short> {
+
+	private final StringProperty personResponsible = new SimpleStringProperty(
+			this, "personResponsible", null);
 
 	public DepartmentTableModel() {
-		this(null, null);
+		super(new Department());
 	}
 
-	public DepartmentTableModel(final String name, final String responsable) {
-		this.name.set(name);
-		this.responsable.set(responsable);
-	}
-	
-	public String getResponsable() {
-		return responsable.get();
+	public DepartmentTableModel(final Department department) {
+		super(department);
+
+		setPersonResponsible(department.getPersonResponsible());
 	}
 
-	public void setResponsable(final String responsable) {
-		this.responsable.set(responsable);
+	public DepartmentTableModel(final String name,
+			final String personResponsible) {
+		super(name);
+
+		setPersonResponsible(personResponsible);
 	}
 
-	public StringProperty responsableProperty() {
-		return responsable;
+	public String getPersonResponsible() {
+		return personResponsible.get();
+	}
+
+	public void setPersonResponsible(final String personResponsible) {
+		this.personResponsible.set(personResponsible);
+	}
+
+	public StringProperty personResponsibleProperty() {
+		return personResponsible;
 	}
 
 	@Override
 	public String toString() {
 		return getName();
 	}
+
 }

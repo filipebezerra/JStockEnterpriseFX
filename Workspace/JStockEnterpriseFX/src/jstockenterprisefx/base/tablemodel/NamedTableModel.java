@@ -16,6 +16,12 @@ public abstract class NamedTableModel<T extends NamedEntity<ID>, ID extends Seri
 		super();
 	}
 
+	public NamedTableModel(final String name) {
+		this();
+
+		setName(name);
+	}
+
 	public NamedTableModel(final String name, final ID id) {
 		super(id);
 
@@ -44,6 +50,12 @@ public abstract class NamedTableModel<T extends NamedEntity<ID>, ID extends Seri
 	public String toString() {
 		return new StringBuffer(super.toString().replace("}", ""))
 				.append(", name : ").append(name.get()).append("}").toString();
+	}
+
+	@Override
+	public boolean filter(final Serializable filterText) {
+		return getName().toUpperCase().contains(
+				filterText.toString().toUpperCase());
 	}
 
 }

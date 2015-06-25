@@ -34,8 +34,8 @@ public class GroupItemController extends
 	}
 
 	@Override
-	protected GroupItemTableModel newTableModel(final GroupItem entity) {
-		return new GroupItemTableModel(entity);
+	protected GroupItemTableModel newTableModel(final GroupItem groupItem) {
+		return new GroupItemTableModel(groupItem);
 	}
 
 	@Override
@@ -44,17 +44,12 @@ public class GroupItemController extends
 	}
 
 	@Override
-	protected void fillEntityFromFields(final GroupItem entity) {
-		super.fillEntityFromFields(entity);
+	protected void fillEntityFromFields(final GroupItem groupItem) {
+		super.fillEntityFromFields(groupItem);
 
-		entity.setGroupType(mGroupTypeField.getSelectionModel()
+		groupItem.setGroupType(mGroupTypeField.getSelectionModel()
 				.getSelectedItem());
-		entity.setObservation(mObservationField.getText());
-	}
-
-	@Override
-	protected Control getDefaultFocusField() {
-		return mNameField;
+		groupItem.setObservation(mObservationField.getText());
 	}
 
 	@Override
