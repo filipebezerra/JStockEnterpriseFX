@@ -14,11 +14,22 @@ public class GroupItemTableModel extends NamedTableModel<GroupItem, Short> {
 	private final StringProperty observation = new SimpleStringProperty(this,
 			"observation", null);
 
+	public GroupItemTableModel() {
+		super(new GroupItem());
+	}
+
 	public GroupItemTableModel(final GroupItem groupItem) {
 		super(groupItem);
 
 		setGroupType(groupItem.getGroupType());
 		setObservation(groupItem.getObservation());
+	}
+
+	public GroupItemTableModel(final String name, final GroupType groupType,
+			final String observation) {
+		setName(name);
+		setGroupType(groupType);
+		setObservation(observation);
 	}
 
 	public GroupType getGroupType() {
@@ -48,6 +59,10 @@ public class GroupItemTableModel extends NamedTableModel<GroupItem, Short> {
 	@Override
 	public String toString() {
 		return getName();
+	}
+
+	public boolean filter(final String filterText) {
+		return getName().toUpperCase().contains(filterText.toUpperCase());
 	}
 
 }

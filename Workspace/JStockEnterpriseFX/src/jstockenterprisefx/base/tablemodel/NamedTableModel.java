@@ -12,6 +12,16 @@ public abstract class NamedTableModel<T extends NamedEntity<ID>, ID extends Seri
 	protected final StringProperty name = new SimpleStringProperty(this,
 			"name", null);
 
+	public NamedTableModel() {
+		super();
+	}
+
+	public NamedTableModel(final String name, final ID id) {
+		super(id);
+
+		setName(name);
+	}
+
 	public NamedTableModel(final T entity) {
 		super(entity);
 

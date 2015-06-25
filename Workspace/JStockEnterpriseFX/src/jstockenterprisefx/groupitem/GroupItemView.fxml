@@ -30,15 +30,15 @@
                         <HBox layoutX="647.0" layoutY="515.0" spacing="15.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
                            <children>
                               <Button fx:id="mEditButton" disable="true" layoutX="647.0" layoutY="515.0" mnemonicParsing="false" onAction="#handleEditAction" text="Editar" />
-                              <Button fx:id="mDeleteButton" disable="true" layoutX="721.0" layoutY="509.0" mnemonicParsing="false" onAction="#handleDeleteAction" text="Excluir" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+                              <Button fx:id="mNewButton" defaultButton="true" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleNewAction" text="Novo" />
                            </children>
                         </HBox>
                         <HBox layoutX="28.0" layoutY="14.0" spacing="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
                            <children>
-                              <TextField fx:id="mSearchField" layoutX="28.0" layoutY="14.0" nodeOrientation="LEFT_TO_RIGHT" promptText="Pesquise por um nome de um grupo" HBox.hgrow="ALWAYS" />
-                              <Button fx:id="mSearchButton" defaultButton="true" disable="true" layoutX="702.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleSearchAction" text="Pesquisar" />
+                              <TextField fx:id="mSearchField" layoutX="28.0" layoutY="14.0" nodeOrientation="LEFT_TO_RIGHT" onKeyReleased="#handleSearchAction" promptText="Pesquise por um nome de um grupo" HBox.hgrow="ALWAYS" />
                            </children>
                         </HBox>
+                        <Button fx:id="mDeleteButton" disable="true" mnemonicParsing="false" onAction="#handleDeleteAction" text="Excluir" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" />
                      </children>
                   </AnchorPane>
             </content>
@@ -57,7 +57,6 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
                               <Label text="Código:" />
@@ -68,14 +67,14 @@
                               <ComboBox fx:id="mGroupTypeField" prefHeight="31.0" prefWidth="192.0" promptText="Selecione um..." GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
                               <Label text="Observação:" GridPane.rowIndex="3" />
                               <TextArea fx:id="mObservationField" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <Button fx:id="mResetFieldsButton" disable="true" mnemonicParsing="false" onAction="#handleResetFieldsAction" text="Limpar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
-                                 <GridPane.margin>
-                                    <Insets right="75.0" />
-                                 </GridPane.margin>
-                              </Button>
-                              <Button fx:id="mSaveButton" defaultButton="true" disable="true" mnemonicParsing="false" onAction="#handleSaveAction" text="Salvar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" />
                            </children>
                         </GridPane>
+                        <HBox layoutX="563.0" layoutY="287.0" spacing="15.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
+                           <children>
+                              <Button fx:id="mSaveButton" defaultButton="true" disable="true" mnemonicParsing="false" onAction="#handleSaveAction" text="Salvar" />
+                              <Button fx:id="mNewButton" mnemonicParsing="false" onAction="#handleNewAction" text="Novo" />
+                           </children>
+                        </HBox>
                      </children></AnchorPane>
             </content>
           </Tab>

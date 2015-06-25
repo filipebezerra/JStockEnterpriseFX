@@ -10,7 +10,7 @@ import java.time.format.DateTimeParseException;
  * 
  * @author Marco Jakob
  */
-public final class DateUtil {
+public final class DateUtils {
 	/** O padrão usado para conversão. Mude como quiser. */
 	private static final String DATE_PATTERN = "dd/MM/yyyy";
 	
@@ -24,7 +24,7 @@ public final class DateUtil {
 			.ofPattern(DATE_TIME_PATTERN);
 
 	/**
-	 * Retorna os dados como String formatado. O {@link DateUtil#DATE_PATTERN}
+	 * Retorna os dados como String formatado. O {@link DateUtils#DATE_PATTERN}
 	 * (padrão de data) que é utilizado.
 	 * 
 	 * @param date
@@ -38,7 +38,7 @@ public final class DateUtil {
 	}
 
 	/**
-	 * Retorna os dados como String formatado. O {@link DateUtil#DATE_TIME_PATTERN}
+	 * Retorna os dados como String formatado. O {@link DateUtils#DATE_TIME_PATTERN}
 	 * (padrão de data e hora) que é utilizado.
 	 * 
 	 * @param date
@@ -52,7 +52,7 @@ public final class DateUtil {
 	}
 	
 	/**
-	 * Converte um String no formato definido {@link DateUtil#DATE_PATTERN} para
+	 * Converte um String no formato definido {@link DateUtils#DATE_PATTERN} para
 	 * um objeto {@link LocalDate}.
 	 * 
 	 * Retorna null se o String não puder se convertido.
@@ -70,7 +70,7 @@ public final class DateUtil {
 	}
 	
 	/**
-	 * Converte um String no formato definido {@link DateUtil#DATE_TIME_PATTERN} para
+	 * Converte um String no formato definido {@link DateUtils#DATE_TIME_PATTERN} para
 	 * um objeto {@link LocalDateTime}.
 	 * 
 	 * Retorna null se o String não puder se convertido.
@@ -95,6 +95,6 @@ public final class DateUtil {
 	 * @return true se o String é uma data válida
 	 */
 	public static boolean validDate(final String dateString) {
-		return DateUtil.parseDate(dateString) != null;
+		return DateUtils.parseDate(dateString) != null;
 	}
 }

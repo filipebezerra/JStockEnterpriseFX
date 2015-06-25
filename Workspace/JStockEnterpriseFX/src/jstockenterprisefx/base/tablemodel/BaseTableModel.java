@@ -17,9 +17,19 @@ public abstract class BaseTableModel<T extends BaseEntity<ID>, ID extends Serial
 	private final Class<T> mEntityClass;
 
 	@SuppressWarnings("unchecked")
-	public BaseTableModel(final T entity) {
+	public BaseTableModel() {
 		mEntityClass = (Class<T>) ((ParameterizedType) getClass()
 				.getGenericSuperclass()).getActualTypeArguments()[0];
+	}
+
+	public BaseTableModel(final ID id) {
+		this();
+
+		setId(id);
+	}
+
+	public BaseTableModel(final T entity) {
+		this();
 
 		setEntity(entity);
 		setId(entity.getId());
@@ -55,8 +65,9 @@ public abstract class BaseTableModel<T extends BaseEntity<ID>, ID extends Serial
 
 	@Override
 	public String toString() {
-		return new StringBuffer(getEntityClass().getSimpleName()).append(" {id : ")
-				.append(String.valueOf(id.get())).append("}").toString();
+		return new StringBuffer(getEntityClass().getSimpleName())
+				.append(" {id : ").append(String.valueOf(id.get())).append("}")
+				.toString();
 	}
 
 }

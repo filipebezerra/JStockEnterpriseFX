@@ -33,15 +33,21 @@ public final class JpaEntityManager {
 	}
 
 	public static void beginTransaction() {
-		mEntityManager.getTransaction().begin();
+		if (mEntityManager.isOpen()
+				&& !mEntityManager.getTransaction().isActive())
+			mEntityManager.getTransaction().begin();
 	}
 
 	public static void commit() {
-		mEntityManager.getTransaction().commit();
+		if (mEntityManager.isOpen()
+				&& mEntityManager.getTransaction().isActive())
+			mEntityManager.getTransaction().commit();
 	}
 
 	public static void rollback() {
-		mEntityManager.getTransaction().rollback();
+		if (mEntityManager.isOpen()
+				&& mEntityManager.getTransaction().isActive())
+			mEntityManager.getTransaction().rollback();
 	}
 
 	public static synchronized void close() {
