@@ -1,45 +1,53 @@
 package jstockenterprisefx.supplier;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Control;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
-import jstockenterprisefx.base.controller.Controller;
+import jstockenterprisefx.base.controller.BaseController;
+import jstockenterprisefx.base.jpa.JpaEntityManager;
+import jstockenterprisefx.base.jpa.JpaGenericDao;
 import jstockenterprisefx.base.model.Uf;
 
-public class SupplierController extends Controller<SupplierTableModel> {
+public class SupplierController extends
+		BaseController<SupplierTableModel, Supplier, Integer> {
+
 	@FXML
-	private TableColumn<SupplierTableModel, String> mRazaoSocialColumn;
+	private TableColumn<SupplierTableModel, String> mCompanyNameColumn;
 
 	@FXML
 	private TableColumn<SupplierTableModel, String> mCnpjColumn;
 
 	@FXML
-	private TableColumn<SupplierTableModel, String> mTelefoneColumn;
-	
-	@FXML
-	private TextField mNomeFantasiaField;
+	private TableColumn<SupplierTableModel, String> mPhoneNumberColumn;
 
 	@FXML
-	private TextField mRazaoSocialField;
+	private TextField mTradingNameField;
+
+	@FXML
+	private TextField mCompanyNameField;
 
 	@FXML
 	private TextField mCnpjField;
 
 	@FXML
-	private TextField mTelefoneField;
+	private TextField mPhoneNumberField;
 
 	@FXML
-	private TextField mEmailField;
+	private TextField mEmailAddressField;
 
 	@FXML
-	private TextField mLogradouroField;
+	private TextField mPublicAreaField;
 
 	@FXML
-	private TextField mBairroField;
+	private TextField mDistrictField;
 
 	@FXML
-	private TextField mCidadeField;
+	private TextField mCityField;
 
 	@FXML
 	private ComboBox<Uf> mUfField;
@@ -48,50 +56,102 @@ public class SupplierController extends Controller<SupplierTableModel> {
 	private TextField mCepField;
 
 	@Override
-	protected void initialize() {
-		mDataTable.getItems().addAll(SupplierMockData.getSupplierData());
+	protected JpaGenericDao<Supplier, Integer> initializeDao() {
+		return new SupplierDao(JpaEntityManager.getEntityManager());
+	}
 
-		super.initialize();
+	@Override
+	protected SupplierTableModel newTableModel() {
+		return new SupplierTableModel(new Supplier());
+	}
 
-		mRazaoSocialColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.razaoSocialProperty());
+	@Override
+	protected SupplierTableModel newTableModel(final Supplier supplier) {
+		return new SupplierTableModel(supplier);
+	}
+
+	@Override
+	protected String getEntityNameToDialogMessages() {
+		return "fornecedor";
+	}
+
+	@Override
+	protected void fillEntityFromFields(final Supplier supplier) {
+		supplier.setCompanyName(mCompanyNameField.getText());
+		supplier.setTradingName(mTradingNameField.getText());
+		supplier.setCnpj(mCnpjField.getText());
+		supplier.setPublicArea(mPublicAreaField.getText());
+		supplier.setDistrict(mDistrictField.getText());
+		supplier.setCity(mCityField.getText());
+		supplier.setUf(mUfField.getSelectionModel().getSelectedItem());
+		supplier.setCep(mCepField.getText());
+		supplier.setPhoneNumber(mPhoneNumberField.getText());
+		supplier.setEmailAddress(mEmailAddressField.getText());
+	}
+
+	@Override
+	protected Control getDefaultFocusField() {
+		return mTradingNameField;
+	}
+
+	@Override
+	protected void bindTableColums() {
+		super.bindTableColums();
+
+		mCompanyNameColumn.setCellValueFactory(cellData -> cellData.getValue()
+				.companyNameProperty());
 		mCnpjColumn.setCellValueFactory(cellData -> cellData.getValue()
 				.cnpjProperty());
-		mTelefoneColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.telefoneProperty());
+		mPhoneNumberColumn.setCellValueFactory(cellData -> cellData.getValue()
+				.phoneNumberProperty());
+	}
 
+	@Override
+	protected void resetFieldsToEmpty() {
+		super.resetFieldsToEmpty();
+
+		mCompanyNameField.setText(null);
+		mTradingNameField.setText(null);
+		mCnpjField.setText(null);
+		mPublicAreaField.setText(null);
+		mDistrictField.setText(null);
+		mCityField.setText(null);
+		mUfField.getSelectionModel().clearSelection();
+		mCepField.setText(null);
+		mPhoneNumberField.setText(null);
+		mEmailAddressField.setText(null);
+	}
+
+	@Override
+	protected void fillFieldsFromEntity(final SupplierTableModel tableModel) {
+		super.fillFieldsFromEntity(tableModel);
+
+		mCompanyNameField.setText(tableModel.getEntity().getCompanyName());
+		mTradingNameField.setText(tableModel.getEntity().getTradingName());
+		mCnpjField.setText(tableModel.getEntity().getCnpj());
+		mPublicAreaField.setText(tableModel.getEntity().getPublicArea());
+		mDistrictField.setText(tableModel.getEntity().getDistrict());
+		mCityField.setText(tableModel.getEntity().getCity());
+		mUfField.getSelectionModel().select(tableModel.getEntity().getUf());
+		mCepField.setText(tableModel.getEntity().getCep());
+		mPhoneNumberField.setText(tableModel.getEntity().getPhoneNumber());
+		mEmailAddressField.setText(tableModel.getEntity().getEmailAddress());
+	}
+
+	@Override
+	protected List<Control> getRequiredFieldList() {
+		List<Control> controlsList = new ArrayList<>();
+		controlsList.add(mCompanyNameField);
+		controlsList.add(mTradingNameField);
+		controlsList.add(mCnpjField);
+		controlsList.add(mCepField);
+
+		return controlsList;
+	}
+
+	@Override
+	protected void loadRelatedData() {
 		mUfField.getItems().addAll(Uf.values());
 	}
 
-	@Override
-	protected void handleEditAction() {
-		super.handleEditAction();
-
-		final SupplierTableModel supplier = mEditingModelObject.get();
-		mNomeFantasiaField.setText(supplier.getNomeFantasia());
-		mRazaoSocialField.setText(supplier.getRazaoSocial());
-		mCnpjField.setText(supplier.getCnpj());
-		mTelefoneField.setText(supplier.getTelefone());
-		mEmailField.setText(supplier.getEmail());
-		mLogradouroField.setText(supplier.getLogradouro());
-		mBairroField.setText(supplier.getBairro());
-		mCidadeField.setText(supplier.getCidade());
-		mCepField.setText(supplier.getCep());
-		mUfField.getSelectionModel().select(supplier.getUf());
-	}
-
-	@Override
-	protected void handleResetFieldsAction() {
-		super.handleResetFieldsAction();
-		mNomeFantasiaField.setText(null);
-		mRazaoSocialField.setText(null);
-		mCnpjField.setText(null);
-		mTelefoneField.setText(null);
-		mEmailField.setText(null);
-		mLogradouroField.setText(null);
-		mBairroField.setText(null);
-		mCidadeField.setText(null);
-		mCepField.setText(null);
-		mUfField.getSelectionModel().clearSelection();
-	}
 }

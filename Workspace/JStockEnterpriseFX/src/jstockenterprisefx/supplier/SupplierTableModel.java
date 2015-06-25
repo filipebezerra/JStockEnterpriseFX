@@ -1,5 +1,7 @@
 package jstockenterprisefx.supplier;
 
+import java.io.Serializable;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -7,63 +9,86 @@ import javafx.beans.property.StringProperty;
 import jstockenterprisefx.base.model.Uf;
 import jstockenterprisefx.base.tablemodel.BaseTableModel;
 
-public class SupplierTableModel extends BaseTableModel {
-	private StringProperty nomeFantasia = new SimpleStringProperty(this,
-			"nomeFantasia", null);
+public class SupplierTableModel extends BaseTableModel<Supplier, Integer> {
 
-	private StringProperty razaoSocial = new SimpleStringProperty(this,
-			"razaoSocial", null);
+	private final StringProperty companyName = new SimpleStringProperty(this,
+			"companyName", null);
 
-	private StringProperty cnpj = new SimpleStringProperty(this, "cnpj", null);
+	private final StringProperty tradingName = new SimpleStringProperty(this,
+			"tradingName", null);
 
-	private StringProperty telefone = new SimpleStringProperty(this,
-			"telefone", null);
-
-	private StringProperty email = new SimpleStringProperty(this, "email", null);
-
-
-	private StringProperty logradouro = new SimpleStringProperty(this,
-			"logradouro", null);
-
-	private StringProperty bairro = new SimpleStringProperty(this, "bairro",
+	private final StringProperty cnpj = new SimpleStringProperty(this, "cnpj",
 			null);
 
-	private StringProperty cidade = new SimpleStringProperty(this, "cidade",
+	private final StringProperty phoneNumber = new SimpleStringProperty(this,
+			"phoneNumber", null);
+
+	private final StringProperty emailAddress = new SimpleStringProperty(this,
+			"emailAddress", null);
+
+	private final StringProperty publicArea = new SimpleStringProperty(this,
+			"publicArea", null);
+
+	private final StringProperty district = new SimpleStringProperty(this,
+			"district", null);
+
+	private final StringProperty city = new SimpleStringProperty(this, "city",
 			null);
 
-	private ObjectProperty<Uf> uf = new SimpleObjectProperty<>(this, "uf", null);
+	private final ObjectProperty<Uf> uf = new SimpleObjectProperty<>(this,
+			"uf", null);
 
-	private StringProperty cep = new SimpleStringProperty(this, "cep", null);
+	private final StringProperty cep = new SimpleStringProperty(this, "cep",
+			null);
 
-	public SupplierTableModel(final String razaoSocial, final String cnpj,
-			final String telefone) {
-		this.razaoSocial.set(razaoSocial);
-		this.cnpj.set(cnpj);
-		this.telefone.set(telefone);
+	public SupplierTableModel() {
+		super(new Supplier());
 	}
 
-	public String getNomeFantasia() {
-		return nomeFantasia.get();
+	public SupplierTableModel(final Supplier supplier) {
+		super(supplier);
+
+		setCompanyName(supplier.getCompanyName());
+		setTradingName(supplier.getTradingName());
+		setCnpj(supplier.getCnpj());
+		setPhoneNumber(supplier.getPhoneNumber());
+		setEmailAddress(supplier.getEmailAddress());
+		setPublicArea(supplier.getPublicArea());
+		setDistrict(supplier.getDistrict());
+		setCity(supplier.getCity());
+		setUf(supplier.getUf());
+		setCep(supplier.getCep());
 	}
 
-	public void setNomeFantasia(final String nomeFantasia) {
-		this.nomeFantasia.set(nomeFantasia);
+	public SupplierTableModel(final String tradingName, final String cnpj,
+			final String phoneNumber) {
+		setTradingName(tradingName);
+		setCnpj(cnpj);
+		setPhoneNumber(phoneNumber);
 	}
 
-	public StringProperty nomeFantasiaProperty() {
-		return nomeFantasia;
+	public String getCompanyName() {
+		return companyName.get();
 	}
 
-	public String getRazaoSocial() {
-		return razaoSocial.get();
+	public void setCompanyName(final String companyName) {
+		this.companyName.set(companyName);
 	}
 
-	public void setRazaoSocial(final String razaoSocial) {
-		this.razaoSocial.set(razaoSocial);
+	public StringProperty companyNameProperty() {
+		return companyName;
 	}
 
-	public StringProperty razaoSocialProperty() {
-		return razaoSocial;
+	public String getTradingName() {
+		return tradingName.get();
+	}
+
+	public void setTradingName(final String tradingName) {
+		this.tradingName.set(tradingName);
+	}
+
+	public StringProperty tradingNameProperty() {
+		return tradingName;
 	}
 
 	public String getCnpj() {
@@ -78,64 +103,64 @@ public class SupplierTableModel extends BaseTableModel {
 		return cnpj;
 	}
 
-	public String getTelefone() {
-		return telefone.get();
+	public String getPhoneNumber() {
+		return phoneNumber.get();
 	}
 
-	public void setTelefone(final String telefone) {
-		this.telefone.set(telefone);
+	public void setPhoneNumber(final String phoneNumber) {
+		this.phoneNumber.set(phoneNumber);
 	}
 
-	public StringProperty telefoneProperty() {
-		return telefone;
+	public StringProperty phoneNumberProperty() {
+		return phoneNumber;
 	}
 
-	public String getEmail() {
-		return email.get();
+	public String getEmailAddress() {
+		return emailAddress.get();
 	}
 
-	public void setEmail(final String email) {
-		this.email.set(email);
+	public void setEmailAddress(final String emailAddress) {
+		this.emailAddress.set(emailAddress);
 	}
 
-	public StringProperty emailProperty() {
-		return email;
+	public StringProperty emailAddressProperty() {
+		return emailAddress;
 	}
 
-	public String getLogradouro() {
-		return logradouro.get();
+	public String getPublicArea() {
+		return publicArea.get();
 	}
 
-	public void setLogradouro(final String logradouro) {
-		this.logradouro.set(logradouro);
+	public void setPublicArea(final String publicArea) {
+		this.publicArea.set(publicArea);
 	}
 
-	public StringProperty logradouroProperty() {
-		return logradouro;
+	public StringProperty publicAreaProperty() {
+		return publicArea;
 	}
 
-	public String getBairro() {
-		return bairro.get();
+	public String getDistrict() {
+		return district.get();
 	}
 
-	public void setBairro(final String bairro) {
-		this.bairro.set(bairro);
+	public void setDistrict(final String district) {
+		this.district.set(district);
 	}
 
-	public StringProperty bairroProperty() {
-		return bairro;
+	public StringProperty districtProperty() {
+		return district;
 	}
 
-	public String getCidade() {
-		return cidade.get();
+	public String getCity() {
+		return city.get();
 	}
 
-	public void setCidade(final String cidade) {
-		this.cidade.set(cidade);
+	public void setCity(final String city) {
+		this.city.set(city);
 	}
 
-	public StringProperty cidadeProperty() {
-		return cidade;
+	public StringProperty cityProperty() {
+		return city;
 	}
 
 	public Uf getUf() {
@@ -164,6 +189,14 @@ public class SupplierTableModel extends BaseTableModel {
 
 	@Override
 	public String toString() {
-		return getRazaoSocial();
+		return getEntity().toString();
 	}
+
+	@Override
+	public boolean filter(final Serializable filterText) {
+		return new StringBuffer(getCompanyName().toUpperCase())
+				.append(getCnpj()).toString()
+				.contains(filterText.toString().toUpperCase());
+	}
+
 }

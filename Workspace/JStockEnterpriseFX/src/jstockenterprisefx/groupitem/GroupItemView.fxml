@@ -35,7 +35,7 @@
                         </HBox>
                         <HBox layoutX="28.0" layoutY="14.0" spacing="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
                            <children>
-                              <TextField fx:id="mSearchField" layoutX="28.0" layoutY="14.0" nodeOrientation="LEFT_TO_RIGHT" onKeyReleased="#handleSearchAction" promptText="Pesquise por um nome de um grupo" HBox.hgrow="ALWAYS" />
+                              <TextField fx:id="mSearchField" layoutX="28.0" layoutY="14.0" nodeOrientation="LEFT_TO_RIGHT" onKeyReleased="#handleSearchAction" promptText="Filtre pelo nome de um grupo" HBox.hgrow="ALWAYS" />
                            </children>
                         </HBox>
                         <Button fx:id="mDeleteButton" disable="true" mnemonicParsing="false" onAction="#handleDeleteAction" text="Excluir" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" />
@@ -47,15 +47,15 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <GridPane layoutX="50.0" layoutY="20.0" prefHeight="246.0" prefWidth="673.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+                        <GridPane layoutX="50.0" layoutY="5.0" prefHeight="246.0" prefWidth="673.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="125.0" />
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                           </columnConstraints>
                           <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
@@ -66,7 +66,10 @@
                               <TextField fx:id="mNameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <ComboBox fx:id="mGroupTypeField" prefHeight="31.0" prefWidth="192.0" promptText="Selecione um..." GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
                               <Label text="Observação:" GridPane.rowIndex="3" />
-                              <TextArea fx:id="mObservationField" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextArea fx:id="mObservationField" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                 <GridPane.margin>
+                                    <Insets bottom="10.0" top="10.0" />
+                                 </GridPane.margin></TextArea>
                            </children>
                         </GridPane>
                         <HBox layoutX="563.0" layoutY="287.0" spacing="15.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">

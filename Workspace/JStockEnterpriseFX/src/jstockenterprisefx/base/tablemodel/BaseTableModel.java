@@ -63,6 +63,7 @@ public abstract class BaseTableModel<T extends BaseEntity<ID>, ID extends Serial
 		return mEntityClass;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean equals(final Object obj) {
 		if (obj != null)
