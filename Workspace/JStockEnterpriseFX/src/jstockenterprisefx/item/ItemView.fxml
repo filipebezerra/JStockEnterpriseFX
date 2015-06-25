@@ -20,7 +20,7 @@
                         <TableView fx:id="mDataTable" layoutX="83.0" layoutY="59.0" prefHeight="254.0" prefWidth="770.0" AnchorPane.bottomAnchor="61.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="61.0">
                           <columns>
                             <TableColumn fx:id="mIdColumn" editable="false" minWidth="65.0" prefWidth="100.0" text="Código" />
-                            <TableColumn fx:id="mDescriptionColumn" editable="false" minWidth="100.0" prefWidth="300.0" text="Descriçao" />
+                            <TableColumn fx:id="mNameColumn" editable="false" minWidth="100.0" prefWidth="300.0" text="Nome" />
                               <TableColumn fx:id="mStockQuantityColumn" editable="false" minWidth="50.0" prefWidth="100.0" text="Qtde Estoque" />
                               <TableColumn fx:id="mLastStockUpdateColumn" prefWidth="75.0" text="Última Atualização" />
                           </columns>
@@ -30,17 +30,18 @@
                         </TableView>
                         <HBox layoutX="647.0" layoutY="515.0" spacing="15.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
                            <children>
-                              <Button fx:id="mEditButton" layoutX="647.0" layoutY="515.0" mnemonicParsing="false" onAction="#handleEditAction" text="Editar" />
-                              <Button fx:id="mDeleteButton" layoutX="721.0" layoutY="509.0" mnemonicParsing="false" onAction="#handleDeleteAction" text="Excluir" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+                              <Button fx:id="mEditButton" disable="true" layoutX="647.0" layoutY="515.0" mnemonicParsing="false" onAction="#handleEditAction" text="Editar" />
+                              <Button fx:id="mNewButton" defaultButton="true" layoutX="721.0" layoutY="509.0" mnemonicParsing="false" onAction="#handleNewAction" text="Novo" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
                            </children>
                         </HBox>
                         <HBox layoutX="28.0" layoutY="14.0" spacing="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
                            <children>
                               <ComboBox fx:id="mSearchOptionsField" prefHeight="31.0" prefWidth="214.0" promptText="Selecione uma pesquisa" />
                               <TextField fx:id="mSearchField" layoutX="28.0" layoutY="14.0" nodeOrientation="LEFT_TO_RIGHT" promptText="Pesquise por um item" HBox.hgrow="ALWAYS" />
-                              <Button fx:id="mSearchButton" defaultButton="true" layoutX="702.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleSearchAction" text="Pesquisar" />
+                              <Button fx:id="mSearchButton" layoutX="702.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleSearchAction" text="Pesquisar" />
                            </children>
                         </HBox>
+                        <Button fx:id="mDeleteButton" disable="true" mnemonicParsing="false" onAction="#handleDeleteAction" text="Excluir" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" />
                      </children>
                   </AnchorPane>
             </content>
@@ -49,47 +50,46 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <GridPane layoutX="50.0" layoutY="20.0" prefHeight="420.0" prefWidth="770.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+                        <GridPane layoutX="50.0" layoutY="5.0" prefHeight="420.0" prefWidth="770.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="125.0" />
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                           </columnConstraints>
                           <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
                               <Label text="Código:" />
                               <Label text="Data Cadastro:" GridPane.rowIndex="1" />
-                              <Label text="Descrição:" GridPane.rowIndex="2" />
+                              <Label text="Nome:" GridPane.rowIndex="2" />
                               <TextField fx:id="mIdField" editable="false" opacity="0.5" GridPane.columnIndex="1" />
                               <Label text="Grupo:" GridPane.rowIndex="3" />
-                              <Button fx:id="mResetFieldsButton" mnemonicParsing="false" onAction="#handleResetFieldsAction" text="Limpar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="8" GridPane.valignment="BOTTOM">
-                                 <GridPane.margin>
-                                    <Insets right="75.0" />
-                                 </GridPane.margin>
-                              </Button>
-                              <Button fx:id="mSaveButton" defaultButton="true" mnemonicParsing="false" onAction="#handleSaveAction" text="Salvar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="8" GridPane.valignment="BOTTOM" />
                               <Label text="Preço Custo:" GridPane.rowIndex="4" />
                               <Label text="Preço Venda:" GridPane.rowIndex="5" />
-                              <TextField fx:id="mDescriptionField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField fx:id="mNameField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <TextField fx:id="mCostPriceField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                               <TextField fx:id="mSalePriceField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                               <Label text="Qtde Estoque:" GridPane.rowIndex="6" />
                               <Label text="Últ. Atualização" GridPane.rowIndex="7" />
                               <TextField fx:id="mStockQuantityField" editable="false" opacity="0.5" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                               <TextField fx:id="mLastStockUpdateField" editable="false" opacity="0.5" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                              <DatePicker fx:id="mCreatedAtField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <ComboBox fx:id="mGroupItemField" prefHeight="31.0" prefWidth="319.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <ComboBox fx:id="mGroupItemField" prefHeight="31.0" prefWidth="319.0" promptText="Selecione um..." GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextField fx:id="mCreatedAtField" editable="false" opacity="0.5" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
+                        <HBox spacing="15.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
+                           <children>
+                              <Button fx:id="mSaveButton" defaultButton="true" disable="true" mnemonicParsing="false" onAction="#handleSaveAction" text="Salvar" />
+                              <Button fx:id="mNewButton" mnemonicParsing="false" onAction="#handleNewAction" text="Novo" />
+                           </children>
+                        </HBox>
                      </children></AnchorPane>
             </content>
           </Tab>

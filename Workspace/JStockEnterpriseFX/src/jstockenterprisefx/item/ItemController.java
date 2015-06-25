@@ -4,27 +4,20 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
+import javafx.scene.control.Control;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import jstockenterprisefx.base.controller.Controller;
+import jstockenterprisefx.base.controller.NamedController;
 import jstockenterprisefx.base.jpa.JpaEntityManager;
+import jstockenterprisefx.base.jpa.JpaGenericDao;
 import jstockenterprisefx.groupitem.GroupItem;
 import jstockenterprisefx.groupitem.GroupItemDao;
-import jstockenterprisefx.groupitem.GroupItemTableModel;
-import jstockenterprisefx.util.DateUtil;
+import jstockenterprisefx.util.DateUtils;
 
-public class ItemController extends Controller<ItemTableModel> {
-	@FXML
-	private TableColumn<ItemTableModel, String> mDescriptionColumn;
+public class ItemController extends NamedController<ItemTableModel, Item, Long> {
 
 	@FXML
 	private TableColumn<ItemTableModel, Integer> mStockQuantityColumn;
@@ -34,9 +27,6 @@ public class ItemController extends Controller<ItemTableModel> {
 
 	@FXML
 	private ComboBox<ItemSearchOption> mSearchOptionsField;
-
-	@FXML
-	private TextField mDescriptionField;
 
 	@FXML
 	private TextField mCostPriceField;
@@ -51,55 +41,69 @@ public class ItemController extends Controller<ItemTableModel> {
 	private TextField mLastStockUpdateField;
 
 	@FXML
-	private DatePicker mCreatedAtField;
+	private TextField mCreatedAtField;
 
 	@FXML
-	private ComboBox<GroupItemTableModel> mGroupItemField;
-
-	private ItemDao dao = new ItemDao(JpaEntityManager.getEntityManager());
+	private ComboBox<GroupItem> mGroupItemField;
 
 	@Override
-	protected void initialize() {
-		// mDataTable.getItems().addAll(ItemMockData.getItemData());
+	protected JpaGenericDao<Item, Long> initializeDao() {
+		return new ItemDao(JpaEntityManager.getEntityManager());
+	}
 
-		super.initialize();
+	@Override
+	protected ItemTableModel newTableModel() {
+		return new ItemTableModel();
+	}
 
-		mDescriptionColumn.setCellValueFactory(cellData -> cellData.getValue()
-				.descriptionProperty());
+	@Override
+	protected ItemTableModel newTableModel(final Item item) {
+		return new ItemTableModel(item);
+	}
+
+	@Override
+	protected String getEntityNameToDialogMessages() {
+		return "item";
+	}
+
+	@Override
+	protected void loadRelatedData() {
+		final List<GroupItem> groupItemList = new GroupItemDao(
+				JpaEntityManager.getEntityManager()).read();
+
+		mGroupItemField.getItems().addAll(groupItemList);
+
+		mSearchOptionsField.getItems().addAll(ItemSearchOption.values());
+	}
+
+	@Override
+	protected void fillEntityFromFields(final Item item) {
+		super.fillEntityFromFields(item);
+
+		item.setCostPrice(new BigDecimal(mCostPriceField.getText()));
+		item.setSalePrice(new BigDecimal(mSalePriceField.getText()));
+		item.setStockQuantity(Integer.valueOf(mStockQuantityField.getText()));
+		item.setLastStockUpdate(DateUtils.parseDateTime(mLastStockUpdateField
+				.getText()));
+		item.setGroupItem(mGroupItemField.getSelectionModel().getSelectedItem());
+	}
+
+	@Override
+	protected void bindTableColums() {
+		super.bindTableColums();
 
 		mStockQuantityColumn.setCellValueFactory(new PropertyValueFactory<>(
 				"stockQuantity"));
 
 		mLastStockUpdateColumn.setCellValueFactory(cellData -> cellData
 				.getValue().lastStockUpdateProperty());
-
-		mSearchOptionsField.getItems().addAll(ItemSearchOption.values());
-		// mGroupField.getItems().addAll(GroupItemMockData.getGroupData());
-		mGroupItemField.getItems().addAll(getGroupItemsList());
-	}
-
-	private ObservableList<GroupItemTableModel> getGroupItemsList() {
-		ObservableList<GroupItemTableModel> groupItemsList = FXCollections
-				.emptyObservableList();
-
-		GroupItemDao groupItemDao = new GroupItemDao(
-				JpaEntityManager.getEntityManager());
-
-		List<GroupItem> list = groupItemDao.read();
-
-		list.forEach(item -> {
-			groupItemsList.add(new GroupItemTableModel(item.getName(), item
-					.getGroupType(), item.getObservation()));
-		});
-
-		return groupItemsList;
 	}
 
 	@Override
-	protected void handleResetFieldsAction(final ActionEvent event) {
-		super.handleResetFieldsAction(event);
-		mCreatedAtField.getEditor().setText(null);
-		mDescriptionField.setText(null);
+	protected void resetFieldsToEmpty() {
+		super.resetFieldsToEmpty();
+
+		mCreatedAtField.setText(null);
 		mGroupItemField.getSelectionModel().clearSelection();
 		mCostPriceField.setText(null);
 		mSalePriceField.setText(null);
@@ -108,42 +112,51 @@ public class ItemController extends Controller<ItemTableModel> {
 	}
 
 	@Override
-	protected void handleSaveAction(final ActionEvent event) {
-		super.handleSaveAction(event);
+	protected void fillFieldsFromEntity(final ItemTableModel tableModel) {
+		super.fillFieldsFromEntity(tableModel);
 
-		GroupItemTableModel groupItemModel = mGroupItemField
-				.selectionModelProperty().get().getSelectedItem();
+		mCreatedAtField.setText(DateUtils.format(tableModel.getEntity()
+				.getCreatedAt()));
+		mGroupItemField.getSelectionModel().select(
+				tableModel.getEntity().getGroupItem());
+		mCostPriceField.setText(String.valueOf(tableModel.getEntity()
+				.getCostPrice()));
+		mSalePriceField.setText(String.valueOf(tableModel.getEntity()
+				.getSalePrice()));
+		mStockQuantityField.setText(String.valueOf(tableModel.getEntity()
+				.getStockQuantity()));
 
-		GroupItem groupItem = new GroupItem(groupItemModel.getId(),
-				groupItemModel.getGroupType(), groupItemModel.getName());
-
-		Item newItem = new Item(mDescriptionField.getText(), new BigDecimal(
-				mCostPriceField.getText()), new BigDecimal(
-				mSalePriceField.getText()), Integer.valueOf(mStockQuantityField
-				.getText()), groupItem);
-
-		dao.create(newItem);
-
-		mIdField.setText(String.valueOf(newItem.getId()));
-
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setHeaderText("Novo registro de Item");
-		alert.setTitle("Cadastro realizado com sucesso!");
-		alert.setContentText("Seu novo registro foi incluído com sucesso.");
+		if (tableModel.getEntity().getLastStockUpdate() != null)
+			mLastStockUpdateField.setText(DateUtils.format(tableModel
+					.getEntity().getLastStockUpdate()));
 	}
 
 	@Override
-	protected void handleSearchAction(final ActionEvent event) {
-		super.handleEditAction(event);
+	protected List<Control> getRequiredFieldList() {
+		List<Control> controlsList = super.getRequiredFieldList();
 
-		final ItemTableModel item = mEditingModelObject.get();
-		mCreatedAtField.setValue(item.getCreatedAt().toLocalDate());
-		mDescriptionField.setText(item.getDescription());
-		mGroupItemField.getSelectionModel().select(item.getGroup());
-		mCostPriceField.setText(String.valueOf(item.getCostPrice()));
-		mSalePriceField.setText(String.valueOf(item.getSalePrice()));
-		mStockQuantityField.setText(String.valueOf(item.getStockQuantity()));
-		mLastStockUpdateField
-				.setText(DateUtil.format(item.getLastStockUpdate()));
+		controlsList.add(mCostPriceField);
+		controlsList.add(mSalePriceField);
+		controlsList.add(mStockQuantityField);
+		controlsList.add(mGroupItemField);
+
+		return controlsList;
 	}
+
+	@Override
+	protected void handleEditingModelObjectChanged(final ItemTableModel newValue) {
+		super.handleEditingModelObjectChanged(newValue);
+
+		if (newValue != null)
+			if (newValue.getId() == null) {
+				mStockQuantityField.setDisable(false);
+				mStockQuantityField.setEditable(true);
+				mStockQuantityField.setOpacity(1);
+			} else {
+				mStockQuantityField.setDisable(true);
+				mStockQuantityField.setEditable(false);
+				mStockQuantityField.setOpacity(0.5);
+			}
+	}
+
 }

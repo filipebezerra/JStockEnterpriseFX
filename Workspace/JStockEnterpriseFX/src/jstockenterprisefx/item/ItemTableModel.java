@@ -8,41 +8,52 @@ import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import jstockenterprisefx.base.tablemodel.BaseTableModel;
-import jstockenterprisefx.groupitem.GroupItemTableModel;
+import jstockenterprisefx.base.tablemodel.NamedTableModel;
+import jstockenterprisefx.groupitem.GroupItem;
 
-public class ItemTableModel extends BaseTableModel<Long> {
-	private ObjectProperty<LocalDateTime> createdAt = new SimpleObjectProperty<>(
+public class ItemTableModel extends NamedTableModel<Item, Long> {
+
+	private final ObjectProperty<LocalDateTime> createdAt = new SimpleObjectProperty<>(
 			this, "createdAt", null);
 
-	private StringProperty description = new SimpleStringProperty(this,
-			"description", null);
-	
-	private DoubleProperty costPrice = new SimpleDoubleProperty(this,
+	private final DoubleProperty costPrice = new SimpleDoubleProperty(this,
 			"costPrice", 0);
 
-	private DoubleProperty salePrice = new SimpleDoubleProperty(this,
+	private final DoubleProperty salePrice = new SimpleDoubleProperty(this,
 			"salePrice", 0);
-	
-	private ReadOnlyIntegerWrapper stockQuantity = new ReadOnlyIntegerWrapper(
+
+	private final ReadOnlyIntegerWrapper stockQuantity = new ReadOnlyIntegerWrapper(
 			this, "stockQuantity", 0);
 
-	private ReadOnlyObjectWrapper<LocalDateTime> lastStockUpdate = new ReadOnlyObjectWrapper<LocalDateTime>(
+	private final ReadOnlyObjectWrapper<LocalDateTime> lastStockUpdate = new ReadOnlyObjectWrapper<LocalDateTime>(
 			this, "lastStockUpdate", null);
 
-	private ObjectProperty<GroupItemTableModel> group = new SimpleObjectProperty<>(this,
-			"group", null);
+	private final ObjectProperty<GroupItem> groupItem = new SimpleObjectProperty<>(
+			this, "groupItem", null);
 
-	public ItemTableModel(final String description, final GroupItemTableModel group,
+	public ItemTableModel() {
+		super(new Item());
+	}
+
+	public ItemTableModel(final Item item) {
+		super(item);
+
+		setCreatedAt(item.getCreatedAt());
+		setCostPrice(item.getCostPrice().doubleValue());
+		setSalePrice(item.getSalePrice().doubleValue());
+		setStockQuantity(item.getStockQuantity());
+		setLastStockUpdate(item.getLastStockUpdate());
+		setGroupItem(item.getGroupItem());
+	}
+
+	public ItemTableModel(final String name, final GroupItem groupItem,
 			final Double salePrice, final Integer stockQuantity,
 			final LocalDateTime lastStockUpdate) {
-		this.description.set(description);
-		this.group.set(group);
-		this.salePrice.set(salePrice);
-		this.stockQuantity.set(stockQuantity);
-		this.lastStockUpdate.set(lastStockUpdate);
+		super(name);
+		setGroupItem(groupItem);
+		setSalePrice(salePrice);
+		setStockQuantity(stockQuantity);
+		setLastStockUpdate(lastStockUpdate);
 	}
 
 	public LocalDateTime getCreatedAt() {
@@ -57,38 +68,26 @@ public class ItemTableModel extends BaseTableModel<Long> {
 		return createdAt;
 	}
 
-	public String getDescription() {
-		return description.get();
-	}
-
-	public void setDescription(final String description) {
-		this.description.set(description);
-	}
-
-	public StringProperty descriptionProperty() {
-		return description;
-	}
-
 	public Double getCostPrice() {
 		return costPrice.get();
 	}
-	
+
 	public void setCostPrice(final Double costPrice) {
 		this.costPrice.set(costPrice);
 	}
-	
+
 	public DoubleProperty costPriceProperty() {
 		return costPrice;
 	}
-	
+
 	public Double getSalePrice() {
 		return salePrice.get();
 	}
-	
+
 	public void setSalePrice(final Double salePrice) {
 		this.salePrice.set(salePrice);
 	}
-	
+
 	public DoubleProperty salePriceProperty() {
 		return salePrice;
 	}
@@ -117,20 +116,21 @@ public class ItemTableModel extends BaseTableModel<Long> {
 		return lastStockUpdate;
 	}
 
-	public GroupItemTableModel getGroup() {
-		return group.get();
+	public GroupItem getGroupItem() {
+		return groupItem.get();
 	}
-	
-	public void setGroup(final GroupItemTableModel group) {
-		this.group.set(group);
+
+	public void setGroupItem(final GroupItem groupItem) {
+		this.groupItem.set(groupItem);
 	}
-	
-	public ObjectProperty<GroupItemTableModel> groupProperty() {
-		return group;
+
+	public ObjectProperty<GroupItem> groupItemProperty() {
+		return groupItem;
 	}
-	
+
 	@Override
 	public String toString() {
-		return getDescription();
+		return getName();
 	}
+
 }
