@@ -12,7 +12,6 @@ import javax.persistence.Query;
 import org.hibernate.exception.ConstraintViolationException;
 
 import jstockenterprisefx.base.entity.BaseEntity;
-import jstockenterprisefx.base.jpa.exceptions.PreExistingEntityException;
 
 public abstract class JpaGenericDao<T extends BaseEntity<ID>, ID extends Serializable> {
 	private static Logger sLogger;
@@ -38,8 +37,7 @@ public abstract class JpaGenericDao<T extends BaseEntity<ID>, ID extends Seriali
 		return mEntityClass;
 	}
 
-	public void create(final T entity) throws PreExistingEntityException,
-			Exception {
+	public void create(final T entity) {
 		try {
 			// TODO treat Unique index or primary key violation
 			mEntityManager.persist(entity);
@@ -69,8 +67,6 @@ public abstract class JpaGenericDao<T extends BaseEntity<ID>, ID extends Seriali
 		} catch (Exception e) {
 			sLogger.severe(e.getMessage());
 			sLogger.severe(e.getCause().getMessage());
-
-			throw new RuntimeException(e);
 		}
 	}
 
