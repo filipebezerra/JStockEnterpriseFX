@@ -61,6 +61,7 @@ public class GroupItemTableModel extends NamedTableModel<GroupItem, Short> {
 		return getName();
 	}
 
+	@Override
 	public boolean filter(final String filterText) {
 		return getName().toUpperCase().contains(filterText.toUpperCase());
 	}
