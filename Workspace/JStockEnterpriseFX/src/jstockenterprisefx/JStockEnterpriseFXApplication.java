@@ -31,6 +31,8 @@ public class JStockEnterpriseFXApplication extends Application {
 	@Override
 	public void start(final Stage primaryStage) {
 		primaryStage.setScene(getScene());
+		primaryStage
+				.setTitle("JStockEnterpriseFX :: O Gerenciador de estoque Eficiente para sua Empresa");
 		primaryStage.show();
 	}
 
