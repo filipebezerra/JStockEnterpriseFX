@@ -67,16 +67,6 @@ public class StockReceipt extends BaseEntity<Long> {
 		this.receiptDate = receiptDate;
 	}
 
-	@Override
-	public Long getId() {
-		return id;
-	}
-
-	@Override
-	public void setId(final Long id) {
-		this.id = id;
-	}
-
 	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
@@ -112,8 +102,8 @@ public class StockReceipt extends BaseEntity<Long> {
 		return supplier;
 	}
 
-	public void setSupplier(final Supplier supplierid) {
-		supplier = supplierid;
+	public void setSupplier(final Supplier supplier) {
+		this.supplier = supplier;
 	}
 
 	@Override
