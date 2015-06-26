@@ -1,12 +1,13 @@
-package jstockenterprisefx.stock;
+package jstockenterprisefx.stock.receipt;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,6 +26,7 @@ import org.hibernate.annotations.GenerationTime;
  * @author Filipe Bezerra
  *
  */
+@Entity
 @NamedQueries({
 		@NamedQuery(name = "StockReceipt.findAll", query = "SELECT s FROM StockReceipt s"),
 		@NamedQuery(name = "StockReceipt.findById", query = "SELECT s FROM StockReceipt s WHERE s.id = :id"),
@@ -36,12 +38,11 @@ public class StockReceipt extends BaseEntity<Long> {
 	@Column(insertable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private LocalDateTime createdAt;
 
-	@Basic(optional = false)
 	@Column(nullable = false)
 	private LocalDate receiptDate;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "stockReceipt", fetch = FetchType.LAZY)
-	private List<StockReceiptItem> stockReceiptItemList;
+	private List<StockReceiptItem> stockReceiptItemList = new ArrayList<>();
 
 	@JoinColumn(name = "supplierId", referencedColumnName = "id", nullable = false)
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -52,6 +53,11 @@ public class StockReceipt extends BaseEntity<Long> {
 
 	public StockReceipt(final Long id) {
 		this.id = id;
+	}
+
+	public StockReceipt(final LocalDate receiptDate, final Supplier supplier) {
+		this.receiptDate = receiptDate;
+		this.supplier = supplier;
 	}
 
 	public StockReceipt(final Long id, final LocalDateTime createdAt,
@@ -94,6 +100,12 @@ public class StockReceipt extends BaseEntity<Long> {
 	public void setStockReceiptItemList(
 			final List<StockReceiptItem> stockReceiptItemList) {
 		this.stockReceiptItemList = stockReceiptItemList;
+		this.stockReceiptItemList.forEach(s -> s.setStockReceipt(this));
+	}
+
+	public void addStockReceiptItem(final StockReceiptItem item) {
+		item.setStockReceipt(this);
+		stockReceiptItemList.add(item);
 	}
 
 	public Supplier getSupplier() {
@@ -124,12 +136,10 @@ public class StockReceipt extends BaseEntity<Long> {
 
 	@Override
 	public String toString() {
-		return new StringBuffer(getClass().getSimpleName())
-				.append("[ id=").append(id).append(", ")
-				.append("createdAt=").append(createdAt).append(", ")
-				.append("itemList=").append(stockReceiptItemList)
-				.append(" ]")
-				.toString();
+		return new StringBuffer(getClass().getSimpleName()).append("[ id=")
+				.append(id).append(", ").append("createdAt=").append(createdAt)
+				.append(", ").append("itemList=").append(stockReceiptItemList)
+				.append(" ]").toString();
 	}
 
 }
