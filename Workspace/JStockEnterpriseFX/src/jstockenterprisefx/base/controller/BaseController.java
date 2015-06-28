@@ -11,6 +11,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -250,17 +251,22 @@ public abstract class BaseController<TM extends BaseTableModel<? extends BaseEnt
 
 		List<T> entityList = mDao.read();
 
+		entityList.forEach(e -> mObservableModelList.add(newTableModel(e)));
+
 		mFilterableModelList = new FilteredList<>(mObservableModelList,
 				p -> true);
 
-		entityList.forEach(e -> mObservableModelList.add(newTableModel(e)));
+		SortedList<TM> sortedModelList = new SortedList<>(mFilterableModelList);
+
+		sortedModelList.comparatorProperty().bind(
+				mDataTable.comparatorProperty());
 
 		mDataTable
 				.getSelectionModel()
 				.selectedItemProperty()
 				.addListener(
 						(observable, oldValue, newValue) -> handleTableSelectionChanged(newValue));
-		mDataTable.setItems(mFilterableModelList);
+		mDataTable.setItems(sortedModelList);
 
 		mDataTable.getSelectionModel().selectFirst();
 
