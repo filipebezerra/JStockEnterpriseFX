@@ -82,8 +82,10 @@ public class ItemController extends NamedController<ItemTableModel, Item, Long> 
 		item.setCostPrice(new BigDecimal(mCostPriceField.getText()));
 		item.setSalePrice(new BigDecimal(mSalePriceField.getText()));
 		item.setStockQuantity(Integer.valueOf(mStockQuantityField.getText()));
-		item.setLastStockUpdate(DateUtils.parseDateTime(mLastStockUpdateField
-				.getText()));
+
+		if (!mLastStockUpdateField.textProperty().isEmpty().get())
+			item.setLastStockUpdate(DateUtils
+					.parseDateTime(mLastStockUpdateField.getText()));
 		item.setGroupItem(mGroupItemField.getSelectionModel().getSelectedItem());
 	}
 
