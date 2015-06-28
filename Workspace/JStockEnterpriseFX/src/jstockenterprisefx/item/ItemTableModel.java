@@ -10,6 +10,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import jstockenterprisefx.base.tablemodel.NamedTableModel;
 import jstockenterprisefx.groupitem.GroupItem;
+import jstockenterprisefx.util.DateUtils;
 
 public class ItemTableModel extends NamedTableModel<Item, Long> {
 
@@ -25,7 +26,7 @@ public class ItemTableModel extends NamedTableModel<Item, Long> {
 	private final ReadOnlyIntegerWrapper stockQuantity = new ReadOnlyIntegerWrapper(
 			this, "stockQuantity", 0);
 
-	private final ReadOnlyObjectWrapper<LocalDateTime> lastStockUpdate = new ReadOnlyObjectWrapper<LocalDateTime>(
+	private final ReadOnlyObjectWrapper<String> lastStockUpdate = new ReadOnlyObjectWrapper<>(
 			this, "lastStockUpdate", null);
 
 	private final ObjectProperty<GroupItem> groupItem = new SimpleObjectProperty<>(
@@ -42,7 +43,7 @@ public class ItemTableModel extends NamedTableModel<Item, Long> {
 		setCostPrice(item.getCostPrice().doubleValue());
 		setSalePrice(item.getSalePrice().doubleValue());
 		setStockQuantity(item.getStockQuantity());
-		setLastStockUpdate(item.getLastStockUpdate());
+		setLastStockUpdate(DateUtils.format(item.getLastStockUpdate()));
 		setGroupItem(item.getGroupItem());
 	}
 
@@ -53,7 +54,7 @@ public class ItemTableModel extends NamedTableModel<Item, Long> {
 		setGroupItem(groupItem);
 		setSalePrice(salePrice);
 		setStockQuantity(stockQuantity);
-		setLastStockUpdate(lastStockUpdate);
+		setLastStockUpdate(DateUtils.format(lastStockUpdate));
 	}
 
 	public LocalDateTime getCreatedAt() {
@@ -104,15 +105,15 @@ public class ItemTableModel extends NamedTableModel<Item, Long> {
 		return stockQuantity;
 	}
 
-	public LocalDateTime getLastStockUpdate() {
+	public String getLastStockUpdate() {
 		return lastStockUpdate.get();
 	}
 
-	public void setLastStockUpdate(final LocalDateTime lastStockUpdate) {
+	public void setLastStockUpdate(final String lastStockUpdate) {
 		this.lastStockUpdate.set(lastStockUpdate);
 	}
 
-	public ReadOnlyObjectWrapper<LocalDateTime> lastStockUpdateProperty() {
+	public ReadOnlyObjectWrapper<String> lastStockUpdateProperty() {
 		return lastStockUpdate;
 	}
 

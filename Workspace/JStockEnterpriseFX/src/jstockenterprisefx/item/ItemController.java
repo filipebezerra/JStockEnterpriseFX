@@ -23,7 +23,7 @@ public class ItemController extends NamedController<ItemTableModel, Item, Long> 
 	private TableColumn<ItemTableModel, Integer> mStockQuantityColumn;
 
 	@FXML
-	private TableColumn<ItemTableModel, LocalDateTime> mLastStockUpdateColumn;
+	private TableColumn<ItemTableModel, String> mLastStockUpdateColumn;
 
 	@FXML
 	private ComboBox<ItemSearchOption> mSearchOptionsField;
