@@ -17,7 +17,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="mDataTable" layoutX="83.0" layoutY="59.0" prefHeight="254.0" prefWidth="770.0" AnchorPane.bottomAnchor="61.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="61.0">
+                        <TableView fx:id="mDataTable" layoutX="83.0" layoutY="59.0" prefHeight="254.0" prefWidth="770.0" AnchorPane.bottomAnchor="86.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="61.0">
                           <columns>
                             <TableColumn fx:id="mIdColumn" editable="false" minWidth="65.0" prefWidth="100.0" text="Código" />
                             <TableColumn fx:id="mNameColumn" editable="false" minWidth="100.0" prefWidth="300.0" text="Nome" />
@@ -39,6 +39,11 @@
                            </children>
                         </HBox>
                         <Button fx:id="mDeleteButton" disable="true" mnemonicParsing="false" onAction="#handleDeleteAction" text="Excluir" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" />
+                        <HBox layoutX="300.0" layoutY="485.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="159.0" AnchorPane.rightAnchor="159.0">
+                           <children>
+                              <Pagination fx:id="mPagination" pageCount="5" prefHeight="52.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
                      </children>
                   </AnchorPane>
             </content>
