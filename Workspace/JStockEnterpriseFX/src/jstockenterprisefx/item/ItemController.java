@@ -3,6 +3,7 @@ package jstockenterprisefx.item;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
@@ -158,6 +159,32 @@ public class ItemController extends NamedController<ItemTableModel, Item, Long> 
 				mStockQuantityField.setEditable(false);
 				mStockQuantityField.setOpacity(0.5);
 			}
+	}
+
+	@Override
+	protected void initialize() {
+		super.initialize();
+
+		mCostPriceField.textProperty().addListener(
+				(ChangeListener<String>) (observable, oldValue, newValue) -> {
+					if (!newValue.matches("\\d*"))
+						mCostPriceField.setText(newValue.replaceAll(
+								"[^\\d+\\.]", ""));
+				});
+
+		mSalePriceField.textProperty().addListener(
+				(ChangeListener<String>) (observable, oldValue, newValue) -> {
+					if (!newValue.matches("\\d*"))
+						mSalePriceField.setText(newValue.replaceAll(
+								"[^\\d+\\.]", ""));
+				});
+
+		mStockQuantityField.textProperty().addListener(
+				(ChangeListener<String>) (observable, oldValue, newValue) -> {
+					if (!newValue.matches("\\d*"))
+						mStockQuantityField.setText(newValue.replaceAll(
+								"[^\\d]", ""));
+				});
 	}
 
 }
