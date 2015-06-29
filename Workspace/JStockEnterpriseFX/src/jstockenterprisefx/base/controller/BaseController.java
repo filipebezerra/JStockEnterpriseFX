@@ -19,6 +19,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Pagination;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -35,6 +36,8 @@ import jstockenterprisefx.util.DialogUtils;
 import jstockenterprisefx.util.TooltipUtils;
 
 public abstract class BaseController<TM extends BaseTableModel<? extends BaseEntity<ID>, ? extends Serializable>, T extends BaseEntity<ID>, ID extends Serializable> {
+
+	protected static final int ROWS_PER_PAGE = 17;
 
 	@FXML
 	protected TabPane mTabPane;
@@ -69,12 +72,19 @@ public abstract class BaseController<TM extends BaseTableModel<? extends BaseEnt
 	@FXML
 	protected Button mSaveButton;
 
+	@FXML
+	private Pagination mPagination;
+
 	protected JpaGenericDao<T, ID> mDao;
 
 	protected ObjectProperty<TM> mEditingModelObject = new SimpleObjectProperty<>(
 			this, "editingModelObject", null);
 
+	protected List<T> mEntityList;
+
 	protected FilteredList<TM> mFilterableModelList;
+
+	protected SortedList<TM> mSortedModelList;
 
 	protected ObservableList<TM> mObservableModelList = FXCollections
 			.observableArrayList();
@@ -82,6 +92,8 @@ public abstract class BaseController<TM extends BaseTableModel<? extends BaseEnt
 	protected List<Control> mRequiredFieldList = new ArrayList<>();
 
 	protected Control mDefaultFocusField;
+
+	protected int mCurrentPageIndex = 0;
 
 	@SuppressWarnings("unchecked")
 	@FXML
@@ -249,16 +261,16 @@ public abstract class BaseController<TM extends BaseTableModel<? extends BaseEnt
 		bindTableColums();
 		mDao = initializeDao();
 
-		List<T> entityList = mDao.read();
+		mEntityList = mDao.read();
 
-		entityList.forEach(e -> mObservableModelList.add(newTableModel(e)));
+		mEntityList.forEach(e -> mObservableModelList.add(newTableModel(e)));
 
 		mFilterableModelList = new FilteredList<>(mObservableModelList,
 				p -> true);
 
-		SortedList<TM> sortedModelList = new SortedList<>(mFilterableModelList);
+		mSortedModelList = new SortedList<>(mFilterableModelList);
 
-		sortedModelList.comparatorProperty().bind(
+		mSortedModelList.comparatorProperty().bind(
 				mDataTable.comparatorProperty());
 
 		mDataTable
@@ -266,9 +278,16 @@ public abstract class BaseController<TM extends BaseTableModel<? extends BaseEnt
 				.selectedItemProperty()
 				.addListener(
 						(observable, oldValue, newValue) -> handleTableSelectionChanged(newValue));
-		mDataTable.setItems(sortedModelList);
+		mDataTable.setItems(mSortedModelList);
 
-		mDataTable.getSelectionModel().selectFirst();
+		mPagination.setPageCount(getPageCount());
+		mPagination.setCurrentPageIndex(0);
+		updateTableView();
+
+		mPagination
+				.currentPageIndexProperty()
+				.addListener(
+						(observable, oldValue, newValue) -> handlePageChanged(newValue));
 
 		loadRelatedData();
 
@@ -278,6 +297,39 @@ public abstract class BaseController<TM extends BaseTableModel<? extends BaseEnt
 		mDefaultFocusField = getDefaultFocusField();
 
 		mRequiredFieldList.addAll(getRequiredFieldList());
+	}
+
+	private void handlePageChanged(final Number newValue) {
+		mCurrentPageIndex = newValue.intValue();
+		updateTableView();
+	}
+
+	private void updateTableView() {
+		final int fromIndex = mCurrentPageIndex * ROWS_PER_PAGE;
+		final int toIndex = ((mCurrentPageIndex * ROWS_PER_PAGE + ROWS_PER_PAGE <= mEntityList
+				.size()) ? mCurrentPageIndex * ROWS_PER_PAGE + ROWS_PER_PAGE
+				: mEntityList.size());
+
+		if (!mObservableModelList.isEmpty())
+			mObservableModelList.clear();
+
+		mEntityList.subList(fromIndex, toIndex).forEach(
+				e -> mObservableModelList.add(newTableModel(e)));
+
+		mDataTable.getSelectionModel().selectFirst();
+	}
+
+	private int getPageCount() {
+		final int currentRowCount = mEntityList.size();
+
+		if (currentRowCount < ROWS_PER_PAGE)
+			return 1;
+		else {
+			int pages = currentRowCount / ROWS_PER_PAGE;
+			final boolean plusPage = currentRowCount % ROWS_PER_PAGE > 0;
+
+			return plusPage ? ++pages : pages;
+		}
 	}
 
 	protected void bindTableColums() {
