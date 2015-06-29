@@ -3,6 +3,7 @@ package jstockenterprisefx.supplier;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
@@ -152,6 +153,30 @@ public class SupplierController extends
 	@Override
 	protected void loadRelatedData() {
 		mUfField.getItems().addAll(Uf.values());
+	}
+
+	@Override
+	protected void initialize() {
+		super.initialize();
+
+		mCnpjField.textProperty().addListener(
+				(ChangeListener<String>) (observable, oldValue, newValue) -> {
+					if (!newValue.matches("\\d*"))
+						mCnpjField.setText(newValue.replaceAll("[^\\d]", ""));
+				});
+
+		mPhoneNumberField.textProperty().addListener(
+				(ChangeListener<String>) (observable, oldValue, newValue) -> {
+					if (!newValue.matches("\\d*"))
+						mPhoneNumberField.setText(newValue.replaceAll("[^\\d]",
+								""));
+				});
+
+		mCepField.textProperty().addListener(
+				(ChangeListener<String>) (observable, oldValue, newValue) -> {
+					if (!newValue.matches("\\d*"))
+						mCepField.setText(newValue.replaceAll("[^\\d]", ""));
+				});
 	}
 
 }
