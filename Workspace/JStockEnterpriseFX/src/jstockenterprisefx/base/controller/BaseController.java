@@ -210,6 +210,8 @@ public abstract class BaseController<TM extends BaseTableModel<? extends BaseEnt
 					"O %s foi criado com sucesso",
 					getEntityNameToDialogMessages()));
 
+			mPagination.setCurrentPageIndex(mPagination.getPageCount() - 1);
+
 			TM newTableModel = newTableModel(entity);
 
 			mObservableModelList.add(newTableModel);
