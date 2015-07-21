@@ -92,8 +92,8 @@ Licença
     See the License for the specific language governing permissions and
     limitations under the License.
 
-[1]: ./Arte/screenshot1.png
-[2]: ./Arte/screenshot2.png
-[3]: ./Arte/screenshot3.png
-[4]: ./Arte/screenshot4.png
-[5]: ./Arte/screenshot5.png
+[1]: ./Art/screenshot1.png
+[2]: ./Art/screenshot2.png
+[3]: ./Art/screenshot3.png
+[4]: ./Art/screenshot4.png
+[5]: ./Art/screenshot5.png
